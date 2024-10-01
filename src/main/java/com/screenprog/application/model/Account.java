@@ -2,19 +2,19 @@ package com.screenprog.application.model;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Entity
 @Data
 public class Account {
-
-
     @Id
     @SequenceGenerator(
             name = "account_sequence",
@@ -33,17 +33,19 @@ public class Account {
     @JoinColumn(
             name = "customer_id"
     )
-
     @JsonBackReference
     private Customer customer;
 
     private Double balance;
 
-    @CreationTimestamp
+    @CreatedDate
     @Column(
           updatable = false
     )
-    private LocalDate openDate;
+    private LocalDateTime openDate;
+
+    private LocalDateTime lastUpdateAt;
+
 
     @Column(columnDefinition = "VARCHAR(10)")
     @Enumerated(EnumType.STRING)
@@ -52,6 +54,15 @@ public class Account {
     @Column(columnDefinition = "VARCHAR(10)")
     @Enumerated(EnumType.STRING)
     private AccountType type;
+
+    @OneToMany(mappedBy = "accountId", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Transaction> transactions;
+
+    @PreUpdate
+    protected void onUpdate(){
+        lastUpdateAt = LocalDateTime.now();
+    }
 }
 
 enum AccountType{

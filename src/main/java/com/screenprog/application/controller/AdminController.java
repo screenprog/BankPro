@@ -1,9 +1,6 @@
 package com.screenprog.application.controller;
 
-import com.screenprog.application.model.Account;
-import com.screenprog.application.model.AccountDTO;
-import com.screenprog.application.model.Customer;
-import com.screenprog.application.model.Staff;
+import com.screenprog.application.model.*;
 import com.screenprog.application.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -49,6 +46,4 @@ public class AdminController {
     public List<Staff> getAllStaff(){
         return service.getAllStaff();
     }
-
-
 }

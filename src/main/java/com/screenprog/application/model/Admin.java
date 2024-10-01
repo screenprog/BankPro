@@ -6,10 +6,10 @@ import lombok.Data;
 
 import static com.screenprog.application.model.Privilege.ADMIN;
 
-@Data
-@Entity
-public class Admin {
-    @Id
-    private Long id;
-    private Privilege privilege = ADMIN;
-}
+//@Data
+//@Entity
+//public class Admin {
+//    @Id
+//    private Long id;
+//    private Privilege privilege = ADMIN;
+//}

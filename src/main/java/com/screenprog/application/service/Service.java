@@ -1,15 +1,15 @@
 package com.screenprog.application.service;
 
-import com.screenprog.application.model.Account;
-import com.screenprog.application.model.AccountDTO;
-import com.screenprog.application.model.Customer;
-import com.screenprog.application.model.Staff;
+import com.screenprog.application.model.*;
 import com.screenprog.application.repo.AccountRepository;
 import com.screenprog.application.repo.CustomerRepository;
 import com.screenprog.application.repo.StaffRepository;
+import com.screenprog.application.repo.TransactionsRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Optional;
 
 @org.springframework.stereotype.Service
 public class Service {
@@ -19,12 +19,14 @@ public class Service {
     final private AccountRepository accountRepository;
 
     final private StaffRepository staffRepository;
+    final private TransactionsRepository transactionRepository;
 
     @Autowired
-    public Service(CustomerRepository customerRepository, AccountRepository accountRepository, StaffRepository staffRepository) {
+    public Service(CustomerRepository customerRepository, AccountRepository accountRepository, StaffRepository staffRepository, TransactionsRepository transactionRepository) {
         this.customerRepository = customerRepository;
         this.accountRepository = accountRepository;
         this.staffRepository = staffRepository;
+        this.transactionRepository = transactionRepository;
     }
 
     public List<Customer> getAllCustomer() {
@@ -60,5 +62,38 @@ public class Service {
 
     public List<Staff> getAllStaff() {
         return staffRepository.findAll();
+    }
+
+    @Transactional
+    public void deposit(Long accountId, Double amount) {
+
+        Account account = getAccount(accountId);
+        if(amount <= 0)
+            throw new IllegalArgumentException("Deposit amount must be positive");
+        account.setBalance(account.getBalance() + amount);
+        Transaction transaction = Transaction.builder()
+                .accountId(account)
+                .amount(amount)
+                .balanceLeft(account.getBalance())
+                .build();
+        transactionRepository.save(transaction);
+        accountRepository.save(account);
+    }
+
+    public void withdraw(Long accountId, Double amount) {
+        Account account = getAccount(accountId);
+        if(account.getBalance() - amount < 100)
+            throw new IllegalArgumentException("Insufficient balance");
+        account.setBalance(account.getBalance() - amount);
+        Transaction transaction = Transaction.builder()
+                .accountId(account)
+                .amount(amount)
+                .balanceLeft(account.getBalance())
+                .build();
+        transactionRepository.save(transaction);
+    }
+
+    private Account getAccount(Long accountId) {
+        return accountRepository.findById(accountId).orElseThrow(()-> new RuntimeException("Account Not Found"));
     }
 }
