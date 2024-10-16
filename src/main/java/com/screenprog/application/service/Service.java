@@ -45,15 +45,20 @@ public class Service {
         return accountRepository.findAll();
     }
 
-    public Customer addAccount(AccountDTO account) {
-        Customer customer = customerRepository.findById(account.customerId()).orElseThrow(() -> new RuntimeException("dfgjl"));
-        Account account1 = new Account();
-        account1.setCustomer(customer);
-        account1.setBalance(account.balance());
-        account1.setStatus(account.status());
-        account1.setType(account.type());
-        accountRepository.save(account1);
-        return customer;
+    public Optional<Account> addAccount(AccountDTO accountDto) {
+
+        if(customerRepository.existsById(accountDto.customerId())){
+            Customer customer = new Customer();
+            customer.setCustomerID(accountDto.customerId());
+            Account account = new Account();
+            account.setCustomer(customer);
+            account.setBalance(accountDto.balance());
+            account.setStatus(accountDto.status());
+            account.setType(accountDto.type());
+            accountRepository.save(account);
+            return Optional.of(account);
+        }
+        return Optional.empty();
     }
 
     public Staff addStaff(Staff staff) {
@@ -67,9 +72,14 @@ public class Service {
     @Transactional
     public void deposit(Long accountId, Double amount) {
 
-        Account account = getAccount(accountId);
+        Optional <Account> accountOptional = getAccount(accountId);
+        if(accountOptional.isEmpty())
+            return;
+
+        Account account = accountOptional.get();
         if(amount <= 0)
             throw new IllegalArgumentException("Deposit amount must be positive");
+
         account.setBalance(account.getBalance() + amount);
         Transaction transaction = Transaction.builder()
                 .accountId(account)
@@ -81,9 +91,14 @@ public class Service {
     }
 
     public void withdraw(Long accountId, Double amount) {
-        Account account = getAccount(accountId);
+        Optional<Account> accountOptional = getAccount(accountId);
+        if(accountOptional.isEmpty())
+            return;
+
+        Account account = accountOptional.get();
         if(account.getBalance() - amount < 100)
             throw new IllegalArgumentException("Insufficient balance");
+
         account.setBalance(account.getBalance() - amount);
         Transaction transaction = Transaction.builder()
                 .accountId(account)
@@ -91,9 +106,10 @@ public class Service {
                 .balanceLeft(account.getBalance())
                 .build();
         transactionRepository.save(transaction);
+        accountRepository.save(account);
     }
 
-    private Account getAccount(Long accountId) {
-        return accountRepository.findById(accountId).orElseThrow(()-> new RuntimeException("Account Not Found"));
+    public Optional<Account> getAccount(Long accountId) {
+        return accountRepository.findById(accountId);
     }
 }

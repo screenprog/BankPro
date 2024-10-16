@@ -39,6 +39,9 @@ public class Account {
     private Double balance;
 
     @CreatedDate
+    @Column(
+          updatable = false
+    )
     private LocalDateTime openDate;
 
     @LastModifiedDate

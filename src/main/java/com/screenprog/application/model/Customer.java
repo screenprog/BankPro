@@ -2,7 +2,9 @@ package com.screenprog.application.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -17,7 +19,7 @@ import static com.screenprog.application.model.Privilege.USER;
 
 @Data
 @Entity
-@Component
+@NoArgsConstructor
 public class Customer {
 
     @Id
@@ -30,7 +32,6 @@ public class Customer {
             strategy = GenerationType.SEQUENCE,
             generator = "customer_seq"
     )
-//    @Column(name = "customer_id")
     private Long customerID;
 
     @Column(
@@ -84,6 +85,16 @@ public class Customer {
 
     @LastModifiedDate
     private LocalDateTime lastModifiedAt;
+
+    public Customer(String firstName, String lastName, LocalDate dob, String address, String password, String phoneNumber, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dob = dob;
+        this.address = address;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+    }
 
 //    @Column(
 //            name = "privileges",

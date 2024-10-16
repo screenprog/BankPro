@@ -16,7 +16,7 @@ public class StaffController {
         this.service = service;
     }
 
-    @PostMapping("/{accountId}/deposit")
+    @PostMapping("deposit/{accountId}")
     public ResponseEntity<String> deposit(@PathVariable Long accountId, @RequestParam Double amount){
         try{
             service.deposit(accountId, amount);
@@ -28,7 +28,7 @@ public class StaffController {
         }
     }
 
-    @GetMapping("{accountId}/withdraw")
+    @GetMapping("withdraw/{accountId}")
     public ResponseEntity<String> withdraw(@PathVariable Long accountId, @RequestParam Double amount){
         try {
             service.withdraw(accountId, amount);
