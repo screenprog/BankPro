@@ -27,6 +27,6 @@ public class Staff {
 
     public Users toUser() {
         System.out.println("In toUser()");
-        return new Users(null,email, password, roles);
+        return new Users(email, password, roles);
     }
 }

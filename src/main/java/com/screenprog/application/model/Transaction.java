@@ -31,7 +31,7 @@ public class Transaction {
     private Double amount;
     private Double balanceLeft;
     private LocalDateTime transactionDate;
-    private String description = "Transaction";
+    private String description = "Self Transaction";
 
     @PrePersist
     protected void onCreate(){

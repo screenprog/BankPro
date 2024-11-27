@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @Entity
 @Data
+@EntityListeners(AuditingEntityListener.class)
 public class Account {
     @Id
     @SequenceGenerator(
@@ -57,10 +59,10 @@ public class Account {
     @JsonManagedReference
     private List<Transaction> transactions;
 
-//    @PreUpdate
-//    protected void onUpdate(){
-//        lastUpdateAt = LocalDateTime.now();
-//    }
+    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private DebitCard card;
+
 }
 
 
