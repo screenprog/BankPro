@@ -74,7 +74,7 @@ public class Account {
 
     public EmailDTO toAccountOpenEmailDTO(String email) {
         String message = (status.equals(Status.PENDING))?
-                "Your account is opened and is pending for approval, please wait for the approval" : "Your account has been opened successfully and is ready to use";
+                "Your account is opened and is pending for approval by the admin it will get active after your first deposit is made" : "Your account has been opened successfully and is ready to use";
         return new EmailDTO(email, "Account Opened", message);
     }
 }

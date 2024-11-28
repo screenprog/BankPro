@@ -1,0 +1,21 @@
+package com.screenprog.application.model;
+
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Lob;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+
+public record ApplyDTO(
+        String firstName,
+        String lastName,
+        String email,
+        String mobileNumber,
+        Gender gender,
+        String address)
+{
+    public Apply toApply() {
+       return new Apply(null,firstName, lastName, email, mobileNumber, gender, address, null, null, null, ApplicationStatus.PENDING);
+    }
+}

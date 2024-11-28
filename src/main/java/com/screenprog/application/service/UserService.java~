@@ -66,7 +66,7 @@ public class UserService {
         Customer customer = byId.get();
         if(customer.getAccount().size() == 2)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't open more than 2 accounts");
-        if (customer.getAccount().size() == 1 && customer.getAccount().getFirst().getType().equals(accountDto.type()))
+        if (customer.getAccount().getFirst().getType().equals(accountDto.type()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't open more than one account of same type");
         Account account = new Account();
         account.setCustomer(customer);

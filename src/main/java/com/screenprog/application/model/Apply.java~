@@ -1,9 +1,17 @@
 package com.screenprog.application.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Apply {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -14,9 +22,10 @@ public class Apply {
     private String mobileNumber;
     @Enumerated(EnumType.STRING)
     private Gender gender;
+    private LocalDate dob;
     private String address;
     @Lob
-    private byte[] Image;
+    private byte[] image;
     @Lob
     private byte[] verificationId;
     @Lob
@@ -24,5 +33,9 @@ public class Apply {
     @Setter
     @Enumerated(EnumType.STRING)
     private ApplicationStatus status;
-
+//
+//    public CustomerDTO toCustomerDTO() {
+//        return new CustomerDTO(firstName, lastName, dob.toString(),
+//                address,firstName+"@123", mobileNumber, email );
+//    }
 }

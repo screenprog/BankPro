@@ -1,6 +1,7 @@
 package com.screenprog.application.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.screenprog.application.email_service.EmailDTO;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,7 +23,8 @@ public class Customer {
     @SequenceGenerator(
             name = "customer_seq",
             sequenceName = "customer_seq",
-            allocationSize = 1
+            allocationSize = 1,
+            initialValue = 1001
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
@@ -70,14 +72,6 @@ public class Customer {
     @JsonManagedReference
     private List<Account> account;
 
-//    @CreatedDate
-//    @Column(
-//            updatable = false
-//    )
-//    private LocalDateTime createdAt;
-//
-//    @LastModifiedDate
-//    private LocalDateTime lastModifiedAt;
     @CreatedDate
     @Column(
             updatable = false,
@@ -103,6 +97,19 @@ public class Customer {
 
     public Users toUser() {
         return new Users(null,this.customerID.toString(), this.password, List.of("USER"));
+    }
+
+    public EmailDTO toApplicationVerifiedEmail() {
+        return new EmailDTO(email, "Application Verified",
+                String.format("Dear %s, \n\n  %s \n  %s \n  %s \n  %s \n  %s \n  %s \n  %s",firstName,
+                        "Congratulations! Your application has been verified and now you are our customer",
+                        "You can create your account and start using our services",
+                        "Before starting make sure to login and change your default password.",
+                        "Here are your login details:",
+                        "Customer ID: "+customerID,
+                        "Password: "+firstName+"@123",
+                        "We look forward to serving you."
+                        ));
     }
 
 //    public Users toUser() {

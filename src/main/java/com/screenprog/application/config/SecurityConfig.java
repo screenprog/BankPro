@@ -28,20 +28,14 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("admin/register", "user/register",
-                                "user/login")
+                                "user/login", "user/email","user/verify-email")
                         .permitAll()
-                        .requestMatchers("admin/hello", "admin/add-one-staff",
-                                "admin/get-staff/{id}",
-                                "admin/get-all-staff")
+                        .requestMatchers("admin/**")
                         .hasRole("ADMIN")
-                        .requestMatchers("staff/add-one-account",
-                                "staff/get-account{id}", "staff/get-all-accounts",
-                                "staff/add-one-customer", "staff/get-customer/{id}",
-                                "staff/get-all-customers", "staff/deposit/{accountId}",
-                                "staff/withdraw/{accountId}",
-                                "staff/get-pending-application",
-                                "staff/update-application")
+                        .requestMatchers("staff/**")
                         .hasRole("STAFF")
+                        .requestMatchers("user/**")
+                        .hasRole("USER")
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session ->

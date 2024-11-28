@@ -181,7 +181,7 @@ public class Service {
 
     @Autowired
     private EmailService emailService;
-
+    
     public List<Application> updateApplications(List<Application> applications) {
 
         Stream<Customer> verifiedApplications = applications.stream()

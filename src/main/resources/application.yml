@@ -5,6 +5,8 @@ spring:
     url: jdbc:postgresql://localhost:5432/bank_data_base
     username: postgres
     password: NoP4$$
+    hikari:
+      auto-commit: false
   jpa:
     hibernate:
       ddl-auto: update
@@ -17,5 +19,17 @@ spring:
     user:
       name: asim
       password: asim
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MY_EMAIL}
+    password: ${MY_EMAIL_APP_PASS}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
 
 

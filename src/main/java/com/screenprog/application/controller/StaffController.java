@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.swing.text.html.Option;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -103,15 +102,17 @@ public class StaffController {
     }
 
     @GetMapping("get-pending-application")
-    public ResponseEntity<List<Apply>> getPendingApplications(){
-        List<Apply> pendingApplications = service.getPendingApplications();
+    public ResponseEntity<List<Application>> getPendingApplications(){
+        List<Application> pendingApplications = service.getPendingApplications();
         return pendingApplications.isEmpty()?
                 ResponseEntity.notFound().build():
                 ResponseEntity.ok(pendingApplications);
     }
 
+//    TODO: implement customer creation if application is
+//    TODO: verified
     @PostMapping("update-applications")
-    public ResponseEntity<List<Apply>> updateApplicationStatus(@RequestBody List<Apply> applications){
+    public ResponseEntity<List<Application>> updateApplicationStatus(@RequestBody List<Application> applications){
       return ResponseEntity.ok(service.updateApplications(applications));
     }
 }
