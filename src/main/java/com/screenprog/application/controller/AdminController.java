@@ -26,6 +26,11 @@ public class AdminController {
 //        this.verificationService = verificationService;
     }
 
+    @GetMapping("login")
+    private ResponseEntity<String> login(@RequestBody Users user){
+        return ResponseEntity.ok(service.verify(user));
+    }
+
     @GetMapping("/hello")
     public ResponseEntity<String> hello(){
         return ResponseEntity.ok("Hello Admin");

@@ -2,13 +2,15 @@ package com.screenprog.application.model;
 
 import jakarta.persistence.*;
 
+
 @Entity
 public class DebitCard {
     @Id
     @SequenceGenerator(
             name = "debit_card_seq",
             sequenceName = "debit_card_seq",
-            allocationSize = 12345
+            allocationSize = 1,
+            initialValue = 12345
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,

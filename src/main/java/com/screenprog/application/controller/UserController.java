@@ -62,7 +62,7 @@ public class UserController {
 //        }
     }
     @GetMapping("check-balance")
-    private ResponseEntity<String> checkBalance(@RequestBody Long accountNumber){
+    private ResponseEntity<String> checkBalance(@RequestParam Long accountNumber){
         Double balance = userService.getBalance(accountNumber);
         if(balance == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Account number is incorrect");

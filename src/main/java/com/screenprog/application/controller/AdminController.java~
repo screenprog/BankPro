@@ -26,6 +26,11 @@ public class AdminController {
 //        this.verificationService = verificationService;
     }
 
+    @GetMapping("login")
+    private ResponseEntity<String> login(@RequestBody Users user){
+
+    }
+
     @GetMapping("/hello")
     public ResponseEntity<String> hello(){
         return ResponseEntity.ok("Hello Admin");
@@ -52,7 +57,7 @@ public class AdminController {
                     .toUri();
             return ResponseEntity.created(locationOfStaff).body("Created successfully");
         } catch (Exception e){
-            return ResponseEntity.badRequest().body(e.toString());
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
 
     }

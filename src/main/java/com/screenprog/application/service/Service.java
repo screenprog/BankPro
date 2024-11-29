@@ -7,6 +7,9 @@ import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
@@ -235,5 +238,16 @@ public class Service {
             default -> null;
         };
 
+    }
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    @Autowired
+    private JsonWebTokenService jwtService;
+
+    public String verify(Users user) {
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+        return (authentication.isAuthenticated())?jwtService.generateToken(user.getUsername()) : "You are not authorized";
     }
 }
