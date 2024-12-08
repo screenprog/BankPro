@@ -112,7 +112,7 @@ public class StaffController {
 
 
     /*TODO: Test this end point :o DONE*/
-    /*TODO: The precision needs to be fixed from 7876.540000000001 to 7876.54*/
+    /*TODO: The precision needs to be fixed */
     @PutMapping("transfer-amount")
     public ResponseEntity<Transaction> transferAmount(@RequestBody TransferDTO transferDTO){
         return ResponseEntity.ok(service.transferAmount(transferDTO));

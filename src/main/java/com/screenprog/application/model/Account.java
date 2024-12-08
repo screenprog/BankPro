@@ -72,6 +72,7 @@ public class Account {
     @JsonManagedReference
     private DebitCard card;
 
+
     public EmailDTO toAccountOpenEmailDTO(String email) {
         String message = (status.equals(Status.PENDING))?
                 "Your account is opened and is pending for approval, please wait for the approval" : "Your account has been opened successfully and is ready to use";

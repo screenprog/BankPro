@@ -10,12 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
+
+import static com.screenprog.application.security.BCryptEncryption.encoder;
 
 @org.springframework.stereotype.Service
 public class Service {
@@ -125,6 +126,7 @@ public class Service {
         account.setBalance(account.getBalance() - amount);
         Transaction transaction = Transaction.builder()
                 .accountId(account)
+                .description("Withdrawn through bank employee")
                 .amount(amount)
                 .balanceLeft(account.getBalance())
                 .build();
@@ -150,6 +152,7 @@ public class Service {
          return applicationsRepository.findAllPendingApplications();
     }
 
+    /*TODO: Test this end point and it's new functionality of working with pin*/
     @Transactional
     public Transaction transferAmount(TransferDTO transferDTO) {
         Account accountOfReceiver = getAccount(transferDTO.accountIdOfReceiver());
@@ -161,6 +164,7 @@ public class Service {
             return Transaction.builder().description("Sender account is incorrect").build();
         if (accountOfSender.getBalance() - transferDTO.balance() <= 100)
             return Transaction.builder().description("Insufficient balance").build();
+
         accountOfReceiver.setBalance(accountOfReceiver.getBalance() + transferDTO.balance());
         accountOfSender.setBalance(accountOfSender.getBalance() - transferDTO.balance());
 
@@ -188,7 +192,7 @@ public class Service {
     public List<Application> updateApplications(List<Application> applications) {
 
         Stream<Customer> verifiedApplications = applications.stream()
-                .filter(apply -> apply.getStatus().equals(ApplicationStatus.VERIFIED))
+                .filter(application -> application.getStatus().equals(ApplicationStatus.VERIFIED))
                 .map(Application::toCustomerDTO)
                 .map(this::addCustomer);
         verifiedApplications
@@ -199,7 +203,6 @@ public class Service {
 
     }
 
-    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
     public Users register(Users user) {
         LOGGER.info("Inside register");
@@ -211,6 +214,10 @@ public class Service {
         return usersRepository.save(user);
     }
 
+    /*TODO: Change the working of this function to receive
+       the current password as well and compare it with the
+       current password if password does not matched then don't
+       change the password just throw an error message*/
     public Users changePassword(Users user) {
         Users userInDB = usersRepository.findByUsername(user.getUsername());
         if (userInDB == null)

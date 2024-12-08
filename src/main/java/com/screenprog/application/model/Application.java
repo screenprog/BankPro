@@ -25,6 +25,7 @@ public class Application {
     private Gender gender;
     private LocalDate dob;
     private String address;
+    private String password;
     @Lob
     private byte[] image;
     @Lob
@@ -37,7 +38,7 @@ public class Application {
 
     public CustomerDTO toCustomerDTO() {
         return new CustomerDTO(firstName, lastName, dob.toString(),
-                address,firstName+"@123", mobileNumber, email );
+                address,password, mobileNumber, email );
     }
 
     public EmailDTO toApplicationReceivedEmailDTO() {

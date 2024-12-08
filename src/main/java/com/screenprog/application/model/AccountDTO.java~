@@ -4,6 +4,5 @@ public record AccountDTO (
     Long customerId,
     Double balance,
     Status status,
-    AccountType type,
-    Integer pin
+    AccountType type
 ){}

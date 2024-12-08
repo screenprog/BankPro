@@ -43,8 +43,12 @@ public class Application {
     public EmailDTO toApplicationReceivedEmailDTO() {
         return new EmailDTO(email, "Application Received",
                 String.format(
-                        "Dear %s, \n  Thank you for applying. \n  Your application has been received and %s \n  Best regards,\n  NOTE: This is an automated email",
-                        firstName, "it will be reviewed in the next few days till then stay tuned."));
+                        "Dear %s, \n  Thank you for applying. \n  %s %s \n  %s,\n  %s",
+                        firstName,
+                        "Your application has been received and",
+                        "it will be reviewed in the next few days till then stay tuned.",
+                        "Best regards",
+                        "NOTE: This is an automated email"));
     }
 
 }

@@ -1,11 +1,9 @@
 package com.screenprog.application.controller;
 
 import com.screenprog.application.model.*;
-import com.screenprog.application.service.Service;
+import com.screenprog.application.service.CenteralisedService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -17,17 +15,22 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
 
-    final private Service service;
-//    final private VerificationService verificationService;
+    final private CenteralisedService service;
     final private Logger LOGGER = LoggerFactory.getLogger(AdminController.class);
-    @Autowired
-    public AdminController(Service service) {
+    public AdminController(CenteralisedService service) {
         this.service = service;
-//        this.verificationService = verificationService;
     }
 
     @GetMapping("login")
-    private ResponseEntity<String> login(@RequestBody Users user){
+    private ResponseEntity<Verified> login(@RequestBody Users user, UriComponentsBuilder uriBuilder){
+        /*TODO: build uri based on user role and embed it into response entity header*/
+        String token = service.verify(user);
+        String path = null;
+        if(token != null)
+            path = service.getPath(user);
+        var verified = new Verified(token, path);
+        
+        return ResponseEntity.ok(verified);
 
     }
 
@@ -37,12 +40,11 @@ public class AdminController {
     }
 
 
-    @PostMapping("register")
+//    @PostMapping("register")
     public ResponseEntity<String> adminRegister(@RequestBody Users user){
         LOGGER.info("Got into admin register");
         try {
             return ResponseEntity.ok(service.register(user).toString());
-//            return ResponseEntity.ok(verificationService.register(user));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Already registered!");
         }

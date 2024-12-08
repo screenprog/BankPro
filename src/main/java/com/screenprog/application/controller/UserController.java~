@@ -115,5 +115,5 @@ public class UserController {
     private ResponseEntity<List<Transaction>> transactions(@RequestParam Long accountNumber){
         return ResponseEntity.ok(userService.getTransactionHistory(accountNumber));
     }
-
+    
 }

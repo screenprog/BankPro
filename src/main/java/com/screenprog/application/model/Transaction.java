@@ -29,11 +29,11 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name = "account_id", nullable = false)
     @JsonBackReference
-    private Account accountId;
+    private Account accountId; //
     private Double amount;
     private Double balanceLeft;
     private LocalDateTime transactionDate;
-    private String description = "Self Transaction";
+    private String description = "Deposited by - 12389778";
 
     @PrePersist
     protected void onCreate(){
