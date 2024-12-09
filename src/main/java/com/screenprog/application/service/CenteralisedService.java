@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.IIOException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,17 +29,17 @@ public class CenteralisedService {
     final private AccountRepository accountRepository;
     final private StaffRepository staffRepository;
     final private TransactionsRepository transactionRepository;
-    final private ApplicationsRepository applicationsRepository;
+    final private EmailService emailService;
 
     private final Logger LOGGER = LoggerFactory.getLogger(CenteralisedService.class);
 
-    public CenteralisedService(UserService userService, UsersRepository usersRepository, CustomerRepository customerRepository, AccountRepository accountRepository, StaffRepository staffRepository, TransactionsRepository transactionRepository, ApplicationsRepository applicationsRepository) {
+    public CenteralisedService(UserService userService, UsersRepository usersRepository, CustomerRepository customerRepository, AccountRepository accountRepository, StaffRepository staffRepository, TransactionsRepository transactionRepository, EmailService emailService) {
         this.usersRepository = usersRepository;
         this.customerRepository = customerRepository;
         this.accountRepository = accountRepository;
         this.staffRepository = staffRepository;
         this.transactionRepository = transactionRepository;
-        this.applicationsRepository = applicationsRepository;
+        this.emailService = emailService;
     }
 
     public List<Customer> getAllCustomer() {
@@ -45,10 +48,16 @@ public class CenteralisedService {
 
     @Transactional
     public Customer addCustomer(CustomerDTO customerDTO) {
-        Customer customer = customerDTO.toCustomer();
+        Customer customer = null;
+        try {
+            customer = customerDTO.toCustomer();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         Customer saved = customerRepository.save(customer);
         String encodedPassword = registerCustomer(saved.toUser()).getPassword();
         saved.setPassword(encodedPassword);
+        emailService.sendEmail(saved.toCustomerEmail());
         return customerRepository.save(saved);
     }
 
@@ -147,9 +156,6 @@ public class CenteralisedService {
         return staffRepository.findById(id).orElse(null);
     }
 
-    public List<Application> getPendingApplications() {
-         return applicationsRepository.findAllPendingApplications();
-    }
 
     @Transactional
     public Transaction transferAmount(TransferDTO transferDTO) {
@@ -182,24 +188,6 @@ public class CenteralisedService {
         transactionRepository.saveAll(transactions);
 
         return transactions.get(1);
-    }
-
-    @Autowired
-    private EmailService emailService;
-
-    public List<Application> updateApplications(List<Application> applications) {
-
-        applications.stream()
-                .filter(application -> application.getStatus().equals(ApplicationStatus.VERIFIED))
-                .map(Application::toCustomerDTO)
-                .map(this::addCustomer)
-                .map(Customer::toApplicationVerifiedEmail)
-                .forEach(emailService::sendEmail);
-
-        /*TODO: filter out the NON_VERIFIED applications and send them a non verified email*/
-
-        return applicationsRepository.saveAll(applications);
-
     }
 
 

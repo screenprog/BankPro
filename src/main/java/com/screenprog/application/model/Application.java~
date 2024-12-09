@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 
@@ -25,6 +26,7 @@ public class Application {
     private Gender gender;
     private LocalDate dob;
     private String address;
+    private String password;
     @Lob
     private byte[] image;
     @Lob
@@ -35,20 +37,34 @@ public class Application {
     @Enumerated(EnumType.STRING)
     private ApplicationStatus status;
 
+    /*This method is converting the Application object into CustomerDTO
+    * because addCustomer() method in CentralizedService requires CustomerDTO
+    * object to function and register a customer */
     public CustomerDTO toCustomerDTO() {
         return new CustomerDTO(firstName, lastName, dob.toString(),
-                address,firstName+"@123", mobileNumber, email );
+                address,password, mobileNumber, email, null));
     }
 
     public EmailDTO toApplicationReceivedEmailDTO() {
         return new EmailDTO(email, "Application Received",
                 String.format(
-                        "Dear %s, \n  Thank you for applying. \n  %s %s \n  %s,\n  %s",
+                        "Dear %s, \n\n  %s \n  %s %s \n  %s \n  %s",
                         firstName,
-                        "Your application has been received and",
-                        "it will be reviewed in the next few days till then stay tuned.",
+                        "Thank you for applying in our bank",
+                        "Your application has been received and it will be reviewed",
+                        "in the next upcoming days till then stay tuned.",
                         "Best regards",
                         "NOTE: This is an automated email"));
     }
 
+    public EmailDTO toApplicationNotVerifiedEmail() {
+        return new EmailDTO(email, "Application Rejected",
+                String.format("Dear %s, \n\n  %s \n  %s \n  %s  \n  %s  \n  %s",firstName,
+                        "Unfortunately your application has rejected and you are not verified",
+                        "If you want to verify your application please visit our branch",
+                        "Make sure to bring your any government approved id",
+                        "We look forward to serving you.",
+                        "Bank Staff"
+                ));
+    }
 }

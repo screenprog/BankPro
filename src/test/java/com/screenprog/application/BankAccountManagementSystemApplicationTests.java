@@ -66,7 +66,7 @@ class BankAccountManagementSystemApplicationTests {
 
 	@Test
 	void shouldCreateAnAccount() {
-		AccountDTO accountDTO = new AccountDTO(1L, 1000.00, Status.ACTIVE, AccountType.SAVING);
+		AccountDTO accountDTO = new AccountDTO(1L, 1000.00, Status.ACTIVE, AccountType.SAVING, 1234);
 		ResponseEntity<String> response = restTemplate
 				.postForEntity("/admin/add-one-account", accountDTO, String.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -82,7 +82,7 @@ class BankAccountManagementSystemApplicationTests {
 
 	@Test
 	void shouldNotCreateAccountOfNonExistingCustomer(){
-		AccountDTO accountDTO = new AccountDTO(1000L, 1000.00, Status.ACTIVE, AccountType.SAVING);
+		AccountDTO accountDTO = new AccountDTO(1000L, 1000.00, Status.ACTIVE, AccountType.SAVING, 1234);
 		ResponseEntity<Void> response = restTemplate
 				.postForEntity("/admin/add-one-account", accountDTO, Void.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);

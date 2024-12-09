@@ -40,6 +40,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invalid OTP");
     }
 
+    /*DONE*/
     @PostMapping("register")
     private ResponseEntity<String> applyToBeACustomer(@ModelAttribute ApplicationDTO applicationDTO,
                                                       @RequestParam("image") MultipartFile image,

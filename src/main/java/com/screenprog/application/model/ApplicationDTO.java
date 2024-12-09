@@ -10,7 +10,7 @@ public record ApplicationDTO(
         String lastName,
         String dob,
         String email,
-        String mobileNumber,
+        String phoneNumber,
         Gender gender,
         String address,
         String password)
@@ -19,6 +19,6 @@ public record ApplicationDTO(
 
     /*Converting this DTO into Application object to work store it into database*/
     public Application toApplication() {
-       return new Application(null,firstName(), lastName(), email(), mobileNumber(), gender(), LocalDate.parse(dob()), address(), encoder.encode(password()), null, null, null, ApplicationStatus.PENDING);
+       return new Application(null,firstName(), lastName(), email(), phoneNumber(), gender(), LocalDate.parse(dob()), address(), encoder.encode(password()), null, null, null, ApplicationStatus.PENDING);
     }
 }

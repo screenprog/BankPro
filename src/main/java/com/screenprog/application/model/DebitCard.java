@@ -1,5 +1,6 @@
 package com.screenprog.application.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -41,9 +42,8 @@ public class DebitCard {
     private LocalDate expirationDate;
     private String pin;
 
-    @OneToOne
-    @JoinColumn(name = "account_id")
+    @OneToOne(mappedBy = "card", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
     private Account account;
-
 }
 

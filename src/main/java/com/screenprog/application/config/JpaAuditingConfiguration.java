@@ -21,4 +21,5 @@ public class JpaAuditingConfiguration {
     public DateTimeProvider dateTimeProvider() {
         return () -> Optional.of(LocalDateTime.now(ZoneId.of("GMT+5")));
     }
+
 }

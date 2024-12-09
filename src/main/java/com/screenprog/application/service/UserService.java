@@ -41,7 +41,10 @@ public class UserService {
 
 
     @Transactional
-    public String applyCustomer(ApplicationDTO applicationDTO, MultipartFile image, MultipartFile verificationId, MultipartFile signatureImage) {
+    public String applyCustomer(ApplicationDTO applicationDTO,
+                                MultipartFile image,
+                                MultipartFile verificationId,
+                                MultipartFile signatureImage) {
         Application apply = applicationDTO.toApplication();
         try {
             apply.setImage(image.getBytes());
@@ -56,7 +59,9 @@ public class UserService {
         applicationsRepository.save(apply);
         emailService.sendEmail(apply.toApplicationReceivedEmailDTO());
         return "Wait for your verification";
+
     }
+
 
     public Double getBalance(Long accountNumber) {
         return accountRepository.findById(accountNumber)
@@ -82,9 +87,9 @@ public class UserService {
                 accountDto.balance() == null ?
                         accountDto.type().equals(AccountType.SAVING) ? 100.00 : 500.00 :
                         accountDto.balance());
-        account.setStatus(accountDto.status() == null ? Status.PENDING : accountDto.status());
+        account.setStatus(Status.ACTIVE);
         account.setType(accountDto.type());
-        DebitCard card = saveDebitCard(accountDto.pin(), customer.getFirstName() + customer.getLastName());
+        DebitCard card = saveDebitCard(accountDto.pin(), customer.getFirstName() + " " + customer.getLastName());
         account.setCard(card);
         Account savedAccount = accountRepository.save(account);
         emailService.sendEmail(savedAccount.toAccountOpenEmailDTO(customer.getEmail()));
@@ -138,10 +143,11 @@ public class UserService {
     public DebitCard saveDebitCard(Integer pin, String cardHolderName){
         var cvv = String.valueOf(random.nextInt(1000)); // Random 3 digit cvv
         var currentDate = LocalDate.now();
-        var expiryDate = LocalDate.of(currentDate.getYear(), currentDate.getMonth(), 1);
+        var expiryDate = LocalDate.of(currentDate.getYear()+5, currentDate.getMonth(), 1);
         var debitCard = DebitCard.builder()
                 .cardHolderName(cardHolderName)
                 .cvv(cvv)
+                .expirationDate(expiryDate)
                 .pin(encoder.encode(pin.toString()))
                 .build();
         return debitCardRepository.save(debitCard);

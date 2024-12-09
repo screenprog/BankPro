@@ -84,8 +84,10 @@ public class Customer {
             columnDefinition = "TIMESTAMP WITH TIME ZONE"
     )
     private LocalDateTime lastModifiedAt;
+    @Lob
+    private byte[] image;
 
-    public Customer(String firstName, String lastName, LocalDate dob, String address, String password, String phoneNumber, String email) {
+    public Customer(String firstName, String lastName, LocalDate dob, String address, String password, String phoneNumber, String email, byte[] image) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dob = dob;
@@ -93,6 +95,7 @@ public class Customer {
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.image = image;
     }
 
     public Users toUser() {
@@ -101,15 +104,24 @@ public class Customer {
 
     public EmailDTO toApplicationVerifiedEmail() {
         return new EmailDTO(email, "Application Verified",
-                String.format("Dear %s, \n\n  %s \n  %s \n  %s \n  %s \n  %s \n  %s \n  %s",firstName,
+                String.format("Dear %s, \n\n  %s \n  %s \n  %s \n  %s",firstName,
                         "Congratulations! Your application has been verified and now you are our customer",
                         "You can create your account and start using our services",
-                        "Before starting make sure to login and change your default password.",
-                        "Here are your login details:",
-                        "Customer ID: "+customerID,
-                        "Password: "+firstName+"@123",
+                        "Best Regards!",
                         "We look forward to serving you."
                         ));
+    }
+
+    public EmailDTO toCustomerEmail() {
+        return new EmailDTO(email, "Customer Verified",
+                String.format("Dear %s, \n\n  %s \n  %s \n  %s \n  %s \n  %s \n  %s",firstName,
+                        "Congratulations! For your customer verification",
+                        "Login into your account and start using our services",
+                        "Make sure to change your default password.",
+                        "And create your account to start using our services.",
+                        "Best Regards!",
+                        "We look forward to serving you."
+                ));
     }
 
 //    public Users toUser() {

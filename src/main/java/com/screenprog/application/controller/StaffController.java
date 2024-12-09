@@ -1,11 +1,15 @@
 package com.screenprog.application.controller;
 
 import com.screenprog.application.model.*;
+import com.screenprog.application.service.ApplicationsService;
 import com.screenprog.application.service.CenteralisedService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
@@ -15,10 +19,12 @@ import java.util.Optional;
 @RequestMapping("/staff")
 public class StaffController {
     final private CenteralisedService service;
+    final private ApplicationsService applicationsService;
+    final private Logger LOGGER = LoggerFactory.getLogger(StaffController.class);
 
-    @Autowired
-    public StaffController(CenteralisedService service) {
+    public StaffController(CenteralisedService service, ApplicationsService applicationsService) {
         this.service = service;
+        this.applicationsService = applicationsService;
     }
 
 
@@ -48,8 +54,10 @@ public class StaffController {
         return ResponseEntity.ok(service.getAllAccounts());
     }
 
+    /*TODO: test this end-point :o DONE*/
     @PostMapping("/add-one-customer")
-    public ResponseEntity<Void> addCustomer(@RequestBody CustomerDTO customer, UriComponentsBuilder ucb){
+    public ResponseEntity<Void> addCustomer(@ModelAttribute CustomerDTO customer, UriComponentsBuilder ucb){
+        LOGGER.info("Inside add one customer");
         Customer customer1 = service.addCustomer(customer);
         URI locationOfNewCustomer = ucb.path("/staff/get-customer/{id}")
                 .buildAndExpand(customer1.getCustomerID())
@@ -72,8 +80,8 @@ public class StaffController {
     }
 
 
-    @PostMapping("deposit/{accountId}")
-    public ResponseEntity<String> deposit(@PathVariable Long accountId, @RequestParam Double amount){
+    @PostMapping("deposit")
+    public ResponseEntity<String> deposit(@RequestParam Long accountId, @RequestParam Double amount){
         try{
             Transaction transaction = service.deposit(accountId, amount);
             if(transaction == null)
@@ -102,10 +110,17 @@ public class StaffController {
 
     @GetMapping("get-pending-application")
     public ResponseEntity<List<Application>> getPendingApplications(){
-        List<Application> pendingApplications = service.getPendingApplications();
+        List<Application> pendingApplications = applicationsService.getPendingApplications();
         return pendingApplications.isEmpty()?
                 ResponseEntity.notFound().build():
                 ResponseEntity.ok(pendingApplications);
+    }
+
+    /*TODO: implement customer creation if application is verified :o DONE */
+    /*TODO: Test this implementation :o DONE*/
+    @PostMapping("update-applications")
+    public ResponseEntity<List<Application>> updateApplicationStatus(@RequestBody List<Application> applications){
+        return ResponseEntity.ok(applicationsService.updateApplications(applications));
     }
 
     /*TODO: Add a feature to fetch the pending accounts to make them active*/
@@ -118,13 +133,6 @@ public class StaffController {
         return ResponseEntity.ok(service.transferAmount(transferDTO));
     }
 
-
-    /*TODO: implement customer creation if application is verified :o DONE */
-    /*TODO: Test this implementation*/
-    @PostMapping("update-applications")
-    public ResponseEntity<List<Application>> updateApplicationStatus(@RequestBody List<Application> applications){
-      return ResponseEntity.ok(service.updateApplications(applications));
-    }
 
 
 }
