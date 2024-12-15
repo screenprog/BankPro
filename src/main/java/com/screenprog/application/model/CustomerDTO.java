@@ -14,11 +14,12 @@ public record CustomerDTO(
         String password,
         String phoneNumber,
         String email,
-        MultipartFile image) {
+        byte[] image) {
     /*This method  is converting the CustomerDTO object into Customer object
     * to save it into database*/
-    public Customer toCustomer() throws IOException {
-        return new Customer(this.firstName, this.lastName, LocalDate.parse(this.dob), this.address, this.password, this.phoneNumber, this.email, image.getBytes());
+    public Customer toCustomer() {
+        return new Customer(this.firstName, this.lastName, LocalDate.parse(this.dob), this.address, this.password, this.phoneNumber, this.email, image);
     }
+
 
 }

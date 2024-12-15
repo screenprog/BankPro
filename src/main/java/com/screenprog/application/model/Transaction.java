@@ -33,7 +33,7 @@ public class Transaction {
     private Double amount;
     private Double balanceLeft;
     private LocalDateTime transactionDate;
-    private String description = "Deposited by - 12389778";
+    private String description; //= "Deposited by - 12389778";
 
     @PrePersist
     protected void onCreate(){

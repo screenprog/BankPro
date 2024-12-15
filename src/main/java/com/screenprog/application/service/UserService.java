@@ -1,13 +1,11 @@
 package com.screenprog.application.service;
 
-import com.screenprog.application.email_service.EmailDTO;
 import com.screenprog.application.email_service.EmailService;
 import com.screenprog.application.model.*;
 import com.screenprog.application.repo.*;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +14,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static com.screenprog.application.security.BCryptEncryption.encoder;
 
@@ -45,6 +45,7 @@ public class UserService {
                                 MultipartFile image,
                                 MultipartFile verificationId,
                                 MultipartFile signatureImage) {
+        LOGGER.info("Inside service");
         Application apply = applicationDTO.toApplication();
         try {
             apply.setImage(image.getBytes());
@@ -54,10 +55,14 @@ public class UserService {
             apply.setSignatureImage(signatureImage.getBytes());
             LOGGER.info("signature is converted");
         } catch (IOException e) {
-            throw new RuntimeException("Failed to convert images into bytes");
+            throw new RuntimeException("Image conversion failed" +
+                    ":",e);
         }
+        LOGGER.info("Done, converted");
         applicationsRepository.save(apply);
-        emailService.sendEmail(apply.toApplicationReceivedEmailDTO());
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.submit(() -> emailService.sendEmail(apply.toApplicationReceivedEmailDTO()));
+        executorService.shutdown();
         return "Wait for your verification";
 
     }
@@ -83,16 +88,15 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't open more than one account of same type");
         var account = new Account();
         account.setCustomer(customer);
-        account.setBalance(
-                accountDto.balance() == null ?
-                        accountDto.type().equals(AccountType.SAVING) ? 100.00 : 500.00 :
-                        accountDto.balance());
+        account.setBalance(00.0);
         account.setStatus(Status.ACTIVE);
         account.setType(accountDto.type());
         DebitCard card = saveDebitCard(accountDto.pin(), customer.getFirstName() + " " + customer.getLastName());
         account.setCard(card);
         Account savedAccount = accountRepository.save(account);
-        emailService.sendEmail(savedAccount.toAccountOpenEmailDTO(customer.getEmail()));
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.submit(() -> emailService.sendEmail(customer.toAccountOpenedEmailDTO()));
+        executorService.shutdown();
         return savedAccount;
     }
 
@@ -106,7 +110,7 @@ public class UserService {
             return Transaction.builder().description("Receiver account is incorrect").build();
         if (accountOfSender == null)
             return Transaction.builder().description("Sender account is incorrect").build();
-        if (accountOfSender.getBalance() - transferDTO.balance() <= 100)
+        if (accountOfSender.getBalance() - transferDTO.balance() < 100)
             return Transaction.builder().description("Insufficient balance").build();
         if(!encoder.matches(transferDTO.pin(), accountOfSender.getCard().getPin()))
             return Transaction.builder().description("Incorrect pin - Transaction failed!").build();
@@ -204,8 +208,11 @@ public class UserService {
 
     /*TODO: Test this function*/
     public List<Transaction> getTransactionHistory(Long accountNumber) {
-//        return transactionsRepository.findAllByAccountId(accountNumber);
-        return null;
+        return transactionsRepository.findAllByAccountId(getAccount(accountNumber));
     }
 
+    public Optional<Customer> getCustomer(Long id) {
+       return customerRepository.findById(id);
+
+    }
 }

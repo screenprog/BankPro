@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Service
 public class ApplicationsService {
@@ -33,36 +35,32 @@ public class ApplicationsService {
     }
 
     public List<Application> updateApplications(List<Application> applications) {
-        List<Application> verifiedApplications = applications.stream()
-                .filter(application -> application.getStatus().equals(ApplicationStatus.VERIFIED))
-                .toList();
-
-        //saving and sending emails for the verified applications
-        for (Application value : verifiedApplications) {
-            var customer = value.toCustomerDTO();
-            Customer customer1 = registerCustomer(customer, value.getImage());
-            emailService.sendEmail(customer1.toApplicationVerifiedEmail());
-        }
-
         /*TODO: filter out the NON_VERIFIED applications and send them a non verified email :o DONE*/
-        applications.stream()
+        applications.parallelStream()
                 .filter(application -> application.getStatus().equals(ApplicationStatus.NON_VERIFIED))
                 .map(Application::toApplicationNotVerifiedEmail)
                 .forEach(emailService::sendEmail);
 
-        return applicationsRepository.saveAll(applications);
+        List<Application> savedApplications = applicationsRepository.saveAll(applications);
+        List<Application> verifiedApplications = savedApplications.stream().filter(application -> application.getStatus().equals(ApplicationStatus.VERIFIED))
+                .toList();
+        ExecutorService executorService = Executors.newVirtualThreadPerTaskExecutor();
+        for (Application value : verifiedApplications) {
+            executorService.submit(() -> {
+                var customerDTO = value.toCustomerDTO();
+                Customer customer = registerCustomer(customerDTO, value.getImage());
+                emailService.sendEmail(customer.toApplicationVerifiedEmail());
+            });
+        }
+        executorService.shutdown();
+        return savedApplications;
 
     }
 
 //    saving customer
     @Transactional
     public Customer registerCustomer(CustomerDTO customerDTO, byte[] image) {
-        Customer customer = null;
-        try { //this is just to handle the IOException so the working of the code is not affected
-            customer = customerDTO.toCustomer(); // image is null
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        Customer customer = customerDTO.toCustomer();
         customer.setImage(image);
         Customer saved = customerRepository.save(customer);
         saveCredentials(saved.toUser());

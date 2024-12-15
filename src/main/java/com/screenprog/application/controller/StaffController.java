@@ -17,6 +17,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/staff")
+@CrossOrigin(origins = "http://127.0.0.1:5500")
 public class StaffController {
     final private CenteralisedService service;
     final private ApplicationsService applicationsService;
@@ -55,6 +56,8 @@ public class StaffController {
     }
 
     /*TODO: test this end-point :o DONE*/
+    /*TODO: This is completed and working very well*/
+    /*TODO: Do not touch it! It's working very fine*/
     @PostMapping("/add-one-customer")
     public ResponseEntity<Void> addCustomer(@ModelAttribute CustomerDTO customer, UriComponentsBuilder ucb){
         LOGGER.info("Inside add one customer");
@@ -65,8 +68,8 @@ public class StaffController {
         return ResponseEntity.created(locationOfNewCustomer).build();
     }
 
-    @GetMapping("/get-customer/{id}")
-    public ResponseEntity<Customer> getCustomer(@PathVariable Long id){
+    @GetMapping("/get-customer")
+    public ResponseEntity<Customer> getCustomer(@RequestParam Long id){
         Customer customer = service.getCustomer(id);
         if(customer == null)
             return ResponseEntity.notFound().build();
@@ -81,9 +84,9 @@ public class StaffController {
 
 
     @PostMapping("deposit")
-    public ResponseEntity<String> deposit(@RequestParam Long accountId, @RequestParam Double amount){
+    public ResponseEntity<String> deposit(@RequestBody TransferDTO transferDTO){
         try{
-            Transaction transaction = service.deposit(accountId, amount);
+            Transaction transaction = service.deposit(transferDTO.accountIdOfReceiver(), transferDTO.balance());
             if(transaction == null)
                 return ResponseEntity.notFound().build();
             return ResponseEntity.ok("Deposit Successful");
@@ -94,8 +97,9 @@ public class StaffController {
         }
     }
 
-    @PostMapping("withdraw/{accountId}")
-    public ResponseEntity<String> withdraw(@PathVariable Long accountId, @RequestParam Double amount){
+
+    @PutMapping("withdraw")
+    public ResponseEntity<String> withdraw(@RequestParam Long accountId, @RequestParam Double amount){
         try {
             Transaction transaction = service.withdraw(accountId, amount);
             if (transaction == null)

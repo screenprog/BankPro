@@ -68,15 +68,9 @@ public class Account {
     private List<Transaction> transactions;
 
     @OneToOne
-    @JoinColumn(name = "account_id")
+    @JoinColumn(name = "card_id")
     private DebitCard card;
 
-
-    public EmailDTO toAccountOpenEmailDTO(String email) {
-        String message = (status.equals(Status.PENDING))?
-                "Your account is opened and is pending for approval, please wait for the approval" : "Your account has been opened successfully and is ready to use";
-        return new EmailDTO(email, "Account Opened", message);
-    }
 }
 
 

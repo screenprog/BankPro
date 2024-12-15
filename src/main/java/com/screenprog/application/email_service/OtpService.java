@@ -16,6 +16,8 @@ public class OtpService {
 
     public String generateOtp(String email) {
         String otp = String.format("%06d", random.nextInt(1000000)); // Generate a 6-digit OTP
+        if(otpStore.containsKey(email))
+            return null;
         otpStore.put(email, otp);
         System.out.println(email + " : " + otpStore.get(email));
         return otp;

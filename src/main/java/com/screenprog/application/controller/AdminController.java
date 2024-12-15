@@ -9,10 +9,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/admin")
+@CrossOrigin(origins = "http://127.0.0.1:5500")
 public class AdminController {
 
     final private CenteralisedService service;
@@ -21,7 +24,7 @@ public class AdminController {
         this.service = service;
     }
 
-    @GetMapping("login")
+    @PostMapping("login")
     private ResponseEntity<Verified> login(@RequestBody Users user, UriComponentsBuilder uriBuilder){
         /*TODO: build uri based on user role and embed it into response entity header*/
         String token = service.verify(user);
@@ -35,12 +38,15 @@ public class AdminController {
     }
 
     @GetMapping("/hello")
-    public ResponseEntity<String> hello(){
-        return ResponseEntity.ok("Hello Admin");
+    public ResponseEntity<Map<String, String>> hello(@RequestParam String name){
+        Map<String, String> map = new HashMap<>();
+        String replace = name.replace(name.charAt(0), String.valueOf(name.charAt(0)).toUpperCase().charAt(0));
+
+        map.put("msg", "Hello, " + replace);
+        return ResponseEntity.ok(map);
     }
 
-
-//    @PostMapping("register")
+    @PostMapping("register")
     public ResponseEntity<String> adminRegister(@RequestBody Users user){
         LOGGER.info("Got into admin register");
         try {

@@ -9,8 +9,8 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.screenprog</groupId>
-	<artifactId>Bank-Acccont-Management-System</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>BankPro</artifactId>
+	<version>v0.0.1</version>
 	<name>Bank-Account-Management-System</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>

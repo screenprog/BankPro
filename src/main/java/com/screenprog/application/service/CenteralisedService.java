@@ -10,14 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.IIOException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
+
 
 import static com.screenprog.application.security.BCryptEncryption.encoder;
 
@@ -49,11 +46,7 @@ public class CenteralisedService {
     @Transactional
     public Customer addCustomer(CustomerDTO customerDTO) {
         Customer customer = null;
-        try {
-            customer = customerDTO.toCustomer();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        customer = customerDTO.toCustomer();
         Customer saved = customerRepository.save(customer);
         String encodedPassword = registerCustomer(saved.toUser()).getPassword();
         saved.setPassword(encodedPassword);
@@ -114,6 +107,7 @@ public class CenteralisedService {
                 .accountId(account)
                 .amount(amount)
                 .balanceLeft(account.getBalance())
+                .description("Deposited through bank")
                 .build();
 
         transactionRepository.save(transaction);
@@ -134,7 +128,7 @@ public class CenteralisedService {
         account.setBalance(account.getBalance() - amount);
         Transaction transaction = Transaction.builder()
                 .accountId(account)
-                .description("Withdrawn through bank employee")
+                .description("Withdrawn through bank")
                 .amount(amount)
                 .balanceLeft(account.getBalance())
                 .build();
@@ -204,14 +198,17 @@ public class CenteralisedService {
     /*TODO: Change the working of this function to receive
        the current password as well and compare it with the
        current password if password does not matched then don't
-       change the password just throw an error message*/
-    public Users changePassword(Users user) {
-        Users userInDB = usersRepository.findByUsername(user.getUsername());
+       change the password just throw an error message :o DONE*/
+    /*TODO: Done completed and it's working very well*/
+    public Users changePassword(ChangePasswordDTO user) {
+        Users userInDB = usersRepository.findByUsername(user.username());
         if (userInDB == null)
             return null;
-        userInDB.setPassword(encoder.encode(user.getPassword()));
-
-        return switch (user.getRoles().getFirst()) {
+        if(!encoder.matches(user.currentPass(), userInDB.getPassword()))
+            throw new RuntimeException("Incorrect pin");
+        userInDB.setPassword(encoder.encode(user.newPass()));
+        LOGGER.info(userInDB.getRoles().toString());
+        return switch (userInDB.getRoles().getFirst()) {
             case "ADMIN" -> usersRepository.save(userInDB);
             case "STAFF" -> {
                 Staff staff = staffRepository.findByEmail(userInDB.getUsername());
@@ -249,10 +246,9 @@ public class CenteralisedService {
     public String getPath(Users user) {
         Users byUsername = usersRepository.findByUsername(user.getUsername());
         if(byUsername.getRoles().contains("ADMIN"))
-            return "admin/dashboard";
+            return "admin.html";
         if(byUsername.getRoles().contains("STAFF"))
             return "staff/dashboard";
-
-        return "user/dashboard";
+        return "Addaccount.html";
     }
 }

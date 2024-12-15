@@ -106,15 +106,11 @@ public class Customer {
     public EmailDTO toApplicationVerifiedEmail() {
         return new EmailDTO(email, "Application Verified",
                 String.format("""
-                             Dear %s,
-                                 Congratulations! Your application has been verified and now
-                                 you are our customer, you can create your account and start
-                                 using our services.
-                                 Your customer id is %s
-                                 Best Regards!",
-                                 We look forward to serving you."
+                                Dear %s,
                              """
-                                ,firstName, customerID.toString()));
+                                ,firstName,
+
+                        ));
     }
 
     public EmailDTO toCustomerEmail() {
@@ -127,7 +123,7 @@ public class Customer {
                             And create your account to start using our services.,
                             Best Regards!,
                             We look forward to serving you.
-                        """, firstName));
+                        """, firstName);
     }
 
     public EmailDTO toAccountOpenedEmailDTO() {

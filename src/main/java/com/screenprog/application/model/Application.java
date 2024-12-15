@@ -42,13 +42,13 @@ public class Application {
     * object to function and register a customer */
     public CustomerDTO toCustomerDTO() {
         return new CustomerDTO(firstName, lastName, dob.toString(),
-                address,password, mobileNumber, email, null);
+                address,password, mobileNumber, email, image);
     }
 
     public EmailDTO toApplicationReceivedEmailDTO() {
         return new EmailDTO(email, "Application Received",
                 String.format(
-                        "Dear %s, \n\n  %s \n  %s %s \n  %s \n  %s",
+                        "Dear %s, \n\n  %s \n  %s \n  %s \n  %s \n  %s",
                         firstName,
                         "Thank you for applying in our bank",
                         "Your application has been received and it will be reviewed",

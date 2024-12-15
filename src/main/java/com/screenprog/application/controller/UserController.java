@@ -6,17 +6,23 @@ import com.screenprog.application.model.*;
 import com.screenprog.application.service.CenteralisedService;
 import com.screenprog.application.service.UserService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = "http://127.0.0.1:5500")
 public class UserController {
 
     @Autowired
@@ -27,10 +33,13 @@ public class UserController {
     private EmailService emailService;
     @Autowired
     private OtpService otpService;
+    private final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
     @PostMapping("email")
-    private ResponseEntity<String> email(@RequestParam String email){
-        return ResponseEntity.ok(emailService.sendOTP(email));
+    private ResponseEntity<Map<String, String>> email(@RequestBody EmailRequest emailRequest){
+        Map<String, String> response = new HashMap<>();
+        response.put("message", emailService.sendOTP(emailRequest.email()));
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("verify-email")
@@ -42,22 +51,38 @@ public class UserController {
 
     /*DONE*/
     @PostMapping("register")
-    private ResponseEntity<String> applyToBeACustomer(@ModelAttribute ApplicationDTO applicationDTO,
+    private ResponseEntity<Map<String, String>> applyToBeACustomer(@ModelAttribute ApplicationDTO applicationDTO,
+                                                      @RequestParam("signature") MultipartFile signature,
                                                       @RequestParam("image") MultipartFile image,
-                                                      @RequestParam("card") MultipartFile verificationId,
-                                                      @RequestParam("signature") MultipartFile signatureImage){
+                                                      @RequestParam("card") MultipartFile card
+                                                      ){
+        LOGGER.info("Inside method");
         try{
-            return ResponseEntity.ok(userService.applyCustomer(applicationDTO, image, verificationId, signatureImage));
+            String s = userService.applyCustomer(applicationDTO, image, card, signature);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", s);
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+            return ResponseEntity.badRequest().build();
         }
     }
 
-    /*TODO: Test this end point*/
+    @GetMapping("dashboard")
+    private ResponseEntity<Customer> dashboard(@RequestParam Long id){
+        return userService.getCustomer(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() ->
+                        ResponseEntity.notFound().build());
+    }
+
+    /*TODO: Test this end point :o DONE*/
+    /*TODO: This endpoint is working well*/
     @PostMapping("open-account")
     private ResponseEntity<Account> openAccount(@RequestBody AccountDTO accountDTO){
+        LOGGER.info("In openAccount");
             return ResponseEntity.ok(userService.openAccount(accountDTO));
     }
+
 
     @GetMapping("check-balance")
     private ResponseEntity<String> checkBalance(@RequestParam Long accountNumber){
@@ -76,7 +101,6 @@ public class UserController {
         return ResponseEntity.ok(transaction);
     }
 
-    /*TODO: Test this end point*/
     /*TODO: This end-point might get suspension*/
     @PostMapping("deposit")
     public ResponseEntity<String> deposit(@RequestBody WithdrawDTO withdrawDTO){
@@ -92,7 +116,8 @@ public class UserController {
         }
     }
 
-    /*TODO: Test this endpoint and it's functionality*/
+    /*TODO: Test this endpoint and it's functionality o: DONE*/
+    /*This end-point is working well*/
     @PutMapping("transfer")
     private ResponseEntity<Transaction> transferAmount(@RequestBody TransferDTO transferDTO){
         Transaction transaction = userService.transferAmount(transferDTO);
@@ -102,18 +127,21 @@ public class UserController {
     }
 
     /*TODO: Add functionality to check whether the one who is
-     * changing the password is the one who is logged in*/
+     * changing the password is the one who is logged in :o DONE*/
+    /*THis end-point is working well*/
     @PostMapping("change-password")
-    private ResponseEntity<Users> changePassword(@RequestBody Users user){
+    private ResponseEntity<Users> changePassword(@RequestBody ChangePasswordDTO user){
         Users userWithUpdatedPassword = service.changePassword(user);
         if(userWithUpdatedPassword == null)
             return ResponseEntity.notFound().build();
         return ResponseEntity.ok(userWithUpdatedPassword);
     }
 
-    /*TODO: Test this end point*/
+    /*TODO: Test this end point :o DONE*/
+    /*test passed*/
     @GetMapping("transaction-history")// ?accountNumber=************
-    private ResponseEntity<List<Transaction>> transactions(@RequestParam Long accountNumber){
+    private ResponseEntity<List<Transaction>> transactions(@RequestParam("id") Long accountNumber){
+        LOGGER.info("In transaction history");
         return ResponseEntity.ok(userService.getTransactionHistory(accountNumber));
     }
 

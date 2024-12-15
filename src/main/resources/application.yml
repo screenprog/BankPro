@@ -2,9 +2,10 @@ spring:
   application:
       name: Bank-Account-Management-System
   datasource:
-    url: jdbc:postgresql://localhost:5432/bank_data_base
+    url: jdbc:postgresql://localhost:5436/bank_data_base
     username: postgres
-    password: NoP4$$
+    password: password
+#    password: NoP4$$
     hikari:
       auto-commit: false
   jpa:
