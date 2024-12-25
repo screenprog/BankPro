@@ -5,7 +5,6 @@ spring:
     url: jdbc:postgresql://localhost:5437/bank_data_base
     username: postgres
     password: password
-#    password: NoP4$$
     hikari:
       auto-commit: false
   jpa:

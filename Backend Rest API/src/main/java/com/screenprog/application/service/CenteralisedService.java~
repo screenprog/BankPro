@@ -249,8 +249,10 @@ public class CenteralisedService {
 
     public String getPath(Users user) {
         Users byUsername = usersRepository.findByUsername(user.getUsername());
+        if(byUsername.getUsername().equals("admin"))
+            return "Admin/staffApplication.html";
         if(byUsername.getRoles().contains("ADMIN"))
-            return "Admin/staffCustomer.html";
+            return "/staffCustomer.html";
         if(byUsername.getRoles().contains("STAFF"))
             return "Staff/Staffacces.html";
         List<Account> account = customerRepository.findById(Long.valueOf(byUsername.getUsername())).get().getAccount();
