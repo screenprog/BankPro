@@ -1,0 +1,132 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    width: 70%;
+    max-width: 900px;
+    height: 500px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.left, .right {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Left Section */
+.left {
+    background-color: #fff;
+    text-align: center;
+}
+
+.left h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: #000;
+}
+
+.login-form {
+    width: 100%;
+    max-width: 300px;
+}
+
+.login-form label {
+    display: flex;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #333;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.forgot-password {
+    display: block;
+    text-align: right;
+    font-size: 12px;
+    color:#1e91c0;
+    text-decoration: none;
+    margin-bottom: 20px;
+}
+
+.login-button {
+    width: 25%;
+    padding: 5px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #1e91c0;
+    border: none;
+   
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    justify-content: center;
+}
+
+.login-button:hover {
+    background-color: #1e91c0;
+}
+
+.register-link {
+    font-size: 12px;
+    margin-top: 10px;
+    display: flex;
+}
+
+.register-link a {
+    color:#1e91c0;
+    text-decoration: none;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+
+/* Right Section */
+.right {
+    background-color: #1e91c0;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo img {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 15px;
+}
+
+.logo h2 {
+    font-size: 2rem;
+    color: #fff;
+    opacity : 0.7;
+}

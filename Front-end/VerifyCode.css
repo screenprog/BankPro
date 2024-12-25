@@ -1,0 +1,92 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1e91c0; /* Matches the background color in the image */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.verify-code-container {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    background-color: #fff;
+    width: 100%;
+    padding: 40px 30px;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.card h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #000;
+}
+
+.card form {
+    margin-top: 20px;
+}
+
+.card label {
+    display: block;
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.card input {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    outline: none;
+}
+
+.card .resend-container {
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+.card .resend-link {
+    font-size: 0.9rem;
+    color: #2b819f;
+    text-decoration: none;
+}
+
+.card .resend-link:hover {
+    text-decoration: underline;
+}
+
+.card button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    color: #fff;
+    background-color:#1e91c0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.card button:hover {
+    background-color: #1e91c0;
+}

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Access Page</title>
+    <link rel="stylesheet" href="staffApplication.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <img src="logomark.png" alt="BankPro Logo">
+                <span>BankPro</span>
+            </div>
+            <ul class="menu">
+                <li><a href="Addaccount.html" >Add Account</a></li>
+                <li ><a href="deposit.html" >Deposit</a></li>
+                <li ><a href="withdraw.html" >Withdraw</a></li>
+                <li class="active"><a href="staffApplication.html" style="color: #1e91c0;">Applications</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <header class="header">
+               
+                <h1>Applications</h1>
+               
+                <div class="profile">
+                    <div class="avatars">
+                       
+                        <img src="image.jpg" alt="profile image">
+                    
+                    </div>
+                    <p>Ritam Singh</p>
+                </div>
+            </header>
+            <section class="pera">
+                <p>....See all pending applications</p>
+            </section>
+            <div class="tabs">
+                <a href="Staffacces.html" class="tab">Accounts</a>
+                <a href="staffCustomer.html" class="tab">Customers</a>
+                <a href="StaffTransaction.html" class="tab">Transaction</a>
+                <a href="staffApplication.html" class="tab active">Applications</a>
+            </div>
+            <section class="transactions">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Date of Birth</th>
+                            <th>Email</th>
+                            <th>Gender</th>
+                            <th>Contact no.</th>
+                            <th>Image</th>
+                            <th>Id Card</th>
+                            <th>Signature</th>
+                            <th>Status</th>
+                            <th>Permission</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- <tr>
+                            <td>46850975</td>
+                            <td>John Doe</td>
+                            <td>1998-05-21</td>
+                            <td>john.doe@example.com</td>
+                            <td class="permission-cell">
+                                <button class="remove-btn">Remove</button>
+                                <button class="allow-btn">Allow</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>58239874</td>
+                            <td>Emily Smith</td>
+                            <td>2001-12-15</td>
+                            <td>emily.smith@example.com</td>
+                            <td class="permission-cell">
+                                <button class="remove-btn">Remove</button>
+                                <button class="allow-btn">Allow</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>75849321</td>
+                            <td>Michael Brown</td>
+                            <td>1999-08-11</td>
+                            <td>michael.brown@example.com</td>
+                            <td class="permission-cell">
+                                <button class="remove-btn">Remove</button>
+                                <button class="allow-btn">Allow</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>94830275</td>
+                            <td>Sophia Johnson</td>
+                            <td>2000-02-28</td>
+                            <td>sophia.johnson@example.com</td>
+                            <td class="permission-cell">
+                                <button class="remove-btn">Remove</button>
+                                <button class="allow-btn">Allow</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>30492817</td>
+                            <td>Daniel Wilson</td>
+                            <td>1995-07-10</td>
+                            <td>daniel.wilson@example.com</td>
+                            <td class="permission-cell">
+                                <button class="remove-btn">Remove</button>
+                                <button class="allow-btn">Allow</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>75849321</td>
+                            <td>Michael Brown</td>
+                            <td>1999-08-11</td>
+                            <td>michael.brown@example.com</td>
+                            <td class="permission-cell">
+                                <button class="remove-btn">Remove</button>
+                                <button class="allow-btn">Allow</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>94830275</td>
+                            <td>Sophia Johnson</td>
+                            <td>2000-02-28</td>
+                            <td>sophia.johnson@example.com</td>
+                            <td class="permission-cell">
+                                <button class="remove-btn">Remove</button>
+                                <button class="allow-btn">Allow</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>30492817</td>
+                            <td>Daniel Wilson</td>
+                            <td>1995-07-10</td>
+                            <td>daniel.wilson@example.com</td>
+                            <td class="permission-cell">
+                                <button class="remove-btn">Remove</button>
+                                <button class="allow-btn">Allow</button>
+                            </td>
+                        </tr> -->
+                    </tbody>
+                </table>
+                <div id="submit-container" style="text-align: center; margin-top: 20px;">
+                    <button class="submit-btn" id="submitChanges">Submit Changes</button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="staffApplication.js"></script>
+
+</body>
+</html>
