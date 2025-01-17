@@ -9,4 +9,6 @@ import java.util.Optional;
 @Repository
 public interface StaffRepository extends JpaRepository<Staff, Long> {
     Staff findByEmail(String username);
+
+    boolean existsByEmail(String email);
 }

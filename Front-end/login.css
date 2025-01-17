@@ -75,6 +75,9 @@ body {
     text-decoration: none;
     margin-bottom: 20px;
 }
+.forgot-password:hover {
+    text-decoration: underline;
+}
 
 .login-button {
     width: 25%;

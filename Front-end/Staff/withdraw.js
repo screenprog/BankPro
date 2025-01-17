@@ -12,8 +12,8 @@ document.querySelector('.pay').addEventListener('click', () => {
   };
 
   const token = localStorage.getItem("token");
-  fetch('http://localhost:8080/staff/deposit', {
-    method: 'POST',
+  fetch('http://localhost:8080/staff/withdraw', {
+    method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`

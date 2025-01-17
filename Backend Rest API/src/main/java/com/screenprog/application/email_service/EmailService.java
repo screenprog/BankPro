@@ -1,5 +1,6 @@
 package com.screenprog.application.email_service;
 
+import com.screenprog.application.repo.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -15,6 +16,8 @@ public class EmailService {
     private JavaMailSender mailSender;
     @Autowired
     private OtpService otpService;
+    @Autowired
+    private CustomerRepository customerRepository;
 
     public void sendEmail(EmailDTO emailDTO) {
         SimpleMailMessage message = new SimpleMailMessage();

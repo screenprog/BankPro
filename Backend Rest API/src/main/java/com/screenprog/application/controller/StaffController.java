@@ -105,8 +105,9 @@ public class StaffController {
 
     @PutMapping("withdraw")
     public ResponseEntity<String> withdraw(@RequestBody TransferDTO transferDTO){
+        LOGGER.info("Inside withdraw");
         try {
-            Transaction transaction = service.withdraw(transferDTO.accountIdOfSender(), transferDTO.balance());
+            Transaction transaction = service.withdraw(transferDTO.accountIdOfReceiver(), transferDTO.balance());
             if (transaction == null)
                 return ResponseEntity.notFound().build();
             return ResponseEntity.ok("Withdrawal Successful");

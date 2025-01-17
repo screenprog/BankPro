@@ -35,18 +35,40 @@ public class UserController {
     private OtpService otpService;
     private final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
+    /*TODO: Test this endpoint :o DONE*/
+    @PostMapping("forgot-pass-email")
+    private String forgotPassEmail(@RequestBody EmailRequest emailRequest){
+        LOGGER.info("Inside forgotPassEmail");
+        return service.verifyEmailForPassWord(emailRequest.email());
+        // after this user will be redirected to verify-email endpoint
+
+    }
+
+    /*TODO: Test this endpoint :o DONE*/
+    @PostMapping("forgot-pass-change")
+    private String forgotPassChange(@RequestBody ForgotPass forgotPass){
+        //TODO:
+        // If email verified than user will be redirected here
+        if(otpService.verifyOtp(forgotPass.email(), forgotPass.otp())){
+            otpService.clearOtp(forgotPass.email());
+            return service.changePassword(forgotPass.email(), forgotPass.newPass());
+        }
+        return "Wrong OTP!";
+    }
+
     @PostMapping("email")
     private ResponseEntity<Map<String, String>> email(@RequestBody EmailRequest emailRequest){
         Map<String, String> response = new HashMap<>();
-        response.put("message", emailService.sendOTP(emailRequest.email()));
+        String message = userService.email(emailRequest.email());
+        response.put("message", message);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("verify-email")
-    private ResponseEntity<String> verifyOTP(@RequestParam("email") String email,@RequestParam("otp") String otp){
+    private ResponseEntity<String> verifyOTP(@RequestBody EmailRequest emailRequest){
         LOGGER.info("Inside verifyOTP");
-        if(otpService.verifyOtp(email, otp))
-            return ResponseEntity.ok(otpService.clearOtp(email));
+        if(otpService.verifyOtp(emailRequest.email(), emailRequest.otp()))
+            return ResponseEntity.ok(otpService.clearOtp(emailRequest.email()));
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Invalid OTP");
     }
 

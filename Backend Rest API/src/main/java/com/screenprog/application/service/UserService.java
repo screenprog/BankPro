@@ -110,14 +110,14 @@ public class UserService {
         Account accountOfReceiver = getAccount(transferDTO.accountIdOfReceiver());
         Account accountOfSender = getAccount(transferDTO.accountIdOfSender());
 
-        if (accountOfReceiver == null)
-            return "Receiver account is incorrect";
         if (accountOfSender == null)
             return "Sender account is incorrect";
-        if (accountOfSender.getBalance() - transferDTO.balance() < 100)
-            return "Insufficient balance";
         if(!encoder.matches(transferDTO.pin(), accountOfSender.getCard().getPin()))
             return "Incorrect pin - Transaction failed!";
+        if (accountOfReceiver == null)
+            return "Receiver account is incorrect";
+        if (accountOfSender.getBalance() - transferDTO.balance() < 100)
+            return "Insufficient balance";
 
         accountOfReceiver.setBalance(accountOfReceiver.getBalance() + transferDTO.balance());
         accountOfSender.setBalance(accountOfSender.getBalance() - transferDTO.balance());
@@ -218,5 +218,11 @@ public class UserService {
     public Optional<Customer> getCustomer(Long id) {
        return customerRepository.findById(id);
 
+    }
+
+    public String email(String email) {
+        if(customerRepository.existsByEmail(email))
+            return "Use a different email ID!\n" + email + " already exist.";
+        return emailService.sendOTP(email);
     }
 }

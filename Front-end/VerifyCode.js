@@ -11,9 +11,9 @@ document.addEventListener("DOMContentLoaded", function() {
         fetch("http://localhost:8080/user/verify-email", {
             method: "POST",
             headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
+                "Content-Type": "application/json"
             },
-            body: new URLSearchParams({
+            body: JSON.stringify({
                 email: email,
                 otp: otp
             })

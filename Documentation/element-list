@@ -1,0 +1,9 @@
+com.screenprog.application
+com.screenprog.application.config
+com.screenprog.application.controller
+com.screenprog.application.dtos
+com.screenprog.application.email_service
+com.screenprog.application.model
+com.screenprog.application.repo
+com.screenprog.application.security
+com.screenprog.application.service

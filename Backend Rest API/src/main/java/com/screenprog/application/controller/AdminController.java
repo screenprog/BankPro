@@ -12,6 +12,12 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+/**
+ * Controller for admin, this controller is only accessible by admin.
+ * Login is accessible by everyone
+ * @since November, 2024
+ * @author Asim Ansari
+ * */
 
 @RestController
 @RequestMapping("/admin")
@@ -24,6 +30,12 @@ public class AdminController {
         this.service = service;
     }
 
+    /**
+     * This method is accessible by everyone
+     * It's purpose is to log in the user
+     * @param user User object, username and password
+     * @return Verified object with token and path
+     * */
     @PostMapping("login")
     private ResponseEntity<Verified> login(@RequestBody Users user){
         String token = service.verify(user);
@@ -36,6 +48,12 @@ public class AdminController {
 
     }
 
+
+    /**
+     * This method is accessible by admin only
+     * @param name Name of the user
+     * @deprecated This method is not used anymore, It was intended for testing
+     * */
     @GetMapping("/hello")
     public ResponseEntity<Map<String, String>> hello(@RequestParam String name){
         Map<String, String> map = new HashMap<>();
@@ -45,6 +63,11 @@ public class AdminController {
         return ResponseEntity.ok(map);
     }
 
+    /**
+     * This method is accessible by admin only
+     * @param user User object with username, password and roles
+     * @return String message
+     * */
     @PostMapping("register")
     public ResponseEntity<String> adminRegister(@RequestBody Users user){
         LOGGER.info("Got into admin register");
@@ -55,6 +78,9 @@ public class AdminController {
         }
     }
 
+    /**
+     * @param staff Staff object
+     * @return String message 'Created successfully' */
     @PostMapping("/add-one-staff")
     public ResponseEntity<String> addStaff(@RequestBody Staff staff, UriComponentsBuilder ucb){
         try {

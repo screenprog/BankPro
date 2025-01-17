@@ -2,6 +2,10 @@ document.addEventListener("DOMContentLoaded", function() {
     const loginForm = document.querySelector('.login-form');
     const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
+    
+    const fotgotPass = document.getElementById("forgot-password");
+    if(fotgotPass.onclick)
+        console.log("Forgot")
 
     loginForm.addEventListener('submit', function(event) {
         event.preventDefault(); // Prevent the default form submission
@@ -15,7 +19,6 @@ document.addEventListener("DOMContentLoaded", function() {
             alert('Please enter valid id/email and password.');
         }
     });
-
 
     function validatePassword(password) {
         return password.length >= 6;
@@ -56,3 +59,5 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 });
+
+

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Forgot Password</title>
+    <link rel="stylesheet" href="VerifyCode.css" />
+  </head>
+  <body>
+    <div class="verify-code-container">
+      <div class="card">
+        <h1>Verify Code</h1>
+        <form>
+          <label for="code">Enter OTP</label>
+          <input type="text" id="code" placeholder="125778..." required />
+          <label for="pass">Enter password</label>
+          <input type="password" id="pass" placeholder="••••••••" required />
+          <label for="confirm-pass">Confirm password</label>
+          <input type="password" id="confirm-pass" placeholder="••••••••" required />
+          
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+    <script src="forgotPass.js"></script>
+  </body>
+</html>
