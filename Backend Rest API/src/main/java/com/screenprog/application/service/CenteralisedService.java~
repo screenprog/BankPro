@@ -487,13 +487,13 @@ public class CenteralisedService {
 
     /*TODO: Test this method*/
     public String changePassword(String email, String newPass) {
-        Customer byEmail = customerRepository.findByEmail(email);
-        byEmail.setPassword(encoder.encode(newPass));
-        Users byUsername = usersRepository.findByUsername(byEmail.getCustomerID().toString());
-        byUsername.setPassword(byUsername.getPassword());
+        Customer customer = customerRepository.findByEmail(email);
+        customer.setPassword(encoder.encode(newPass));
+        Users byUsername = usersRepository.findByUsername(customer.getCustomerID().toString());
+        byUsername.setPassword(customer.getPassword());
         //TODO:
         // Send email of password changed.
-        customerRepository.save(byEmail);
+        customerRepository.save(customer);
         usersRepository.save(byUsername);
         return "Password changed successfully";
     }

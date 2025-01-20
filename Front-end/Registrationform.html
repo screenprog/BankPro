@@ -1,95 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Registration Form</title>
-    <link rel="stylesheet" href="Registrationform.css">
-</head>
-<body>
-    <div class="registration-container">
-        <div class="form-card">
-            <h1>Registration Form</h1>
-            <form>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="first-name">First Name*</label>
-                        <input type="text" id="first-name" style="font-size: 12px;" placeholder="Enter first name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="last-name">Last Name*</label>
-                        <input type="text" id="last-name"style="font-size: 12px;" placeholder="Enter last name" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" style="font-size: 12px;" placeholder="aay@example.com" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Phone Number</label>
-                        <input type="tel" id="phone" style="font-size: 12px;" placeholder="+91 6767453452" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="dob">Date of Birth</label>
-                        <input type="date" id="dob" style="font-size: 12px;" placeholder="DD/MM/YYYY" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="gender">Gender</label>
-                        <select style="font-size: 12px;" id="gender">
-                            <option value="" disabled selected>Select</option>
-                            <option value="MALE">Male</option>
-                            <option value="FEMALE">Female</option>
-                            <!-- <option value="other">Other</option> -->
-                        </select>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="address">Address</label>
-                        <input type="text" id="address" style="font-size: 12px;" placeholder="City, State" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="password">Enter Password</label>
-                        <input type="password" id="password"style="font-size: 12px;" placeholder="Enter password" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="confirm-password">Confirm Password</label>
-                        <input type="password" id="confirm-password" style="font-size: 12px; "placeholder="Confirm password" required>
-                    </div>
-                </div>
-                <div class="form-row upload-row">
-                    <div class="form-group">
-                        <label for="upload1">Upload Signature</label>
-                        <div class="upload-box" style="font-size: 12px;">Add an attachment (png)
-                            <input type="file" id="upload1" accept="image/png" style="font-size: 12px;" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="upload2">Upload passport size photo</label>
-                        <div class="upload-box" style="font-size: 12px;">Add an attachment (png)
-                            <input type="file" id="upload2" accept="image/png" style="font-size: 12px;" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="upload3">Upload Idtentity </label>
-                        <div class="upload-box"  style="font-size: 12px;">Add an attachment (png)
-                            <input type="file" id="upload3" accept="image/png" style="font-size: 12px;" >
-                        </div>
-                    </div>
-                </div>
-                <div class="form-actions">
-                    <!-- <button type="button" class="edit-button">Edit</button> -->
-                    <button type="submit" class="register-button" >Register</button>
-                </div>
-            </form>
-        </div>
+    <link rel="stylesheet" href="Registrationform.css" />
+  </head>
+  <body>
+    <div id="loading-spinner" class="spinner"></div>
+    <div class="registration-container" id="container">
+      <div class="form-card">
+        <h1>Registration Form</h1>
+        <form>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="first-name">First Name*</label>
+              <input
+                type="text"
+                id="first-name"
+                style="font-size: 12px"
+                placeholder="Enter first name"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="last-name">Last Name*</label>
+              <input
+                type="text"
+                id="last-name"
+                style="font-size: 12px"
+                placeholder="Enter last name"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input
+                type="email"
+                id="email"
+                style="font-size: 12px"
+                placeholder="aay@example.com"
+                readonly
+              />
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input
+                type="tel"
+                id="phone"
+                style="font-size: 12px"
+                placeholder="+91 6767453452"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="dob">Date of Birth</label>
+              <input
+                type="date"
+                id="dob"
+                style="font-size: 12px"
+                placeholder="DD/MM/YYYY"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="gender">Gender</label>
+              <select style="font-size: 12px" id="gender">
+                <option value="" disabled selected>Select</option>
+                <option value="MALE">Male</option>
+                <option value="FEMALE">Female</option>
+                <!-- <option value="other">Other</option> -->
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="address">Address</label>
+              <input
+                type="text"
+                id="address"
+                style="font-size: 12px"
+                placeholder="City, State"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="password">Enter Password</label>
+              <input
+                type="password"
+                id="password"
+                style="font-size: 12px"
+                placeholder="Enter password"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="confirm-password">Confirm Password</label>
+              <input
+                type="password"
+                id="confirm-password"
+                style="font-size: 12px"
+                placeholder="Confirm password"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-row upload-row">
+            <div class="form-group">
+              <label for="upload1">Upload Signature</label>
+              <div class="upload-box" style="font-size: 12px">
+                Add an attachment (png)
+                <input
+                  type="file"
+                  id="upload1"
+                  accept="image/png"
+                  style="font-size: 12px"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="upload2">Upload passport size photo</label>
+              <div class="upload-box" style="font-size: 12px">
+                Add an attachment (png)
+                <input
+                  type="file"
+                  id="upload2"
+                  accept="image/png"
+                  style="font-size: 12px"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="upload3">Upload Idtentity </label>
+              <div class="upload-box" style="font-size: 12px">
+                Add an attachment (png)
+                <input
+                  type="file"
+                  id="upload3"
+                  accept="image/png"
+                  style="font-size: 12px"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="form-actions">
+            <!-- <button type="button" class="edit-button">Edit</button> -->
+            <button type="submit" class="register-button">Register</button>
+          </div>
+        </form>
+      </div>
     </div>
-    
-    <script src = "Registrationform.js"></script>
-</body>
+
+    <script type="module" src="Registrationform.js"></script>
+  </body>
 </html>

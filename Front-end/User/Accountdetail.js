@@ -1,8 +1,14 @@
+import config from '../config.js';
+
 function fetchAccountDetails() {
     // Send a GET request to the backend API to retrieve the account data
     const token = localStorage.getItem("token");
     const username = localStorage.getItem("username");
-    fetch(`http://localhost:8080/user/dashboard?id=${username}`, {
+    const spinner = document.getElementById("loading-spinner");
+    const content = document.getElementById("content");
+    spinner.style.display = "block";
+    content.style.display = "none";
+    fetch(`${config.BACKEND_API_URL}/user/dashboard?id=${username}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -18,7 +24,6 @@ function fetchAccountDetails() {
         localStorage.setItem("accountId", data.account[0].accountNumber);
         localStorage.setItem("name", data.firstName + " " + data.lastName)
 
-        console.log(data);
         document.querySelector('.profile p').textContent = `${data.firstName + " " + data.lastName}`;
         document.querySelector('.account-info table').innerHTML = `
             <tr><th>Customer ID:</th><td>${data.customerID}</td></tr>
@@ -36,6 +41,10 @@ function fetchAccountDetails() {
     .catch(error => {
         console.error('Error:', error);
         alert('Failed to load account details');
+    })
+    .finally(() => {
+        spinner.style.display = "none";
+        content.style.display = "";
     });
 }
 

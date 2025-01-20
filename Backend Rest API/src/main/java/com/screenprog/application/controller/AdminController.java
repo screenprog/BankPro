@@ -21,7 +21,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/admin")
-@CrossOrigin(origins = "http://127.0.0.1:5500")
 public class AdminController {
 
     final private CenteralisedService service;
@@ -54,6 +53,7 @@ public class AdminController {
      * @param name Name of the user
      * @deprecated This method is not used anymore, It was intended for testing
      * */
+    @Deprecated
     @GetMapping("/hello")
     public ResponseEntity<Map<String, String>> hello(@RequestParam String name){
         Map<String, String> map = new HashMap<>();

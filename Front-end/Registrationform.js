@@ -1,10 +1,12 @@
+import config from './config.js';
+
 document.addEventListener("DOMContentLoaded", function() {
     const form = document.querySelector("form");
     const registerButton = document.querySelector('.register-button');
-    
     const emailElement = document.getElementById("email");
     emailElement.value = localStorage.getItem("email");
-    // Disable the button initially
+    const spinner = document.getElementById('loading-spinner');
+    const container = document.getElementById('container');
     
     form.addEventListener("submit", function(event) {
         event.preventDefault(); // Prevent the default form submission
@@ -69,8 +71,10 @@ document.addEventListener("DOMContentLoaded", function() {
     
 
         registerButton.disabled = true;
+        spinner.style.display = 'block';
+        container.style.display = 'none';
         // Send data to the backend
-        fetch("http://localhost:8080/user/register", {
+        fetch(`${config.BACKEND_API_URL}/user/register`, {
             method: "POST",
             body: formData // Send FormData directly
         })
@@ -80,16 +84,16 @@ document.addEventListener("DOMContentLoaded", function() {
             }
             return response.json();
         })
-        .then(data => {
-            registerButton.disabled = false;
-            console.log("Success:", data["message"]);
+        .then(() => {
             window.location.href = "Completeregistration.html"
-            // Handle success (e.g., show a success message, redirect, etc.)
         })
         .catch((error) => {
-            registerButton.disabled = false;
             console.error("Error:", error);
-            // Handle error (e.g., show an error message)
+        })
+        .finally(() => {
+            spinner.style.display = 'none';
+            container.style.display = 'flex';
+            registerButton.disabled = false;
         });
     });
 });

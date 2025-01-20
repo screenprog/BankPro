@@ -1,52 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Payment Page</title>
-  <link rel="stylesheet" href="Payment.css">
-</head>
-<body>
-  <div class="container">
-    <aside class="sidebar">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment Page</title>
+    <link rel="stylesheet" href="Payment.css" />
+  </head>
+  <body>
+    <div class="container">
+      <aside class="sidebar">
         <div class="logo">
-        <img src="logomark.png" alt="BankPro Logo">
-        <h1>BankPro</h1>
+          <img src="logomark.png" alt="BankPro Logo" />
+          <h1>BankPro</h1>
         </div>
-      <div>
-        <ul class="menu">
-          <li><a href="Addaccount.html" >Add Account</a></li>
-          <li class="active"><a href="deposit.html" style="color: #1e91c0;">Deposit</a></li>
-          <li ><a href="withdraw.html" >Withdraw</a></li>
-          <li><a href="Staffacces.html">Staff</a></li>
-      </ul>
+        <div>
+          <ul class="menu">
+            <li><a href="Addaccount.html">Add Account</a></li>
+            <li class="active">
+              <a href="deposit.html" style="color: #1e91c0">Deposit</a>
+            </li>
+            <li><a href="withdraw.html">Withdraw</a></li>
+            <li><a href="Staffacces.html">Staff</a></li>
+          </ul>
+        </div>
+      </aside>
+      <main class="content">
+        <div class="content-header">
+          <h1>Deposit</h1>
+        </div>
+        <div class="profile-section">
+          <p class="pera">....Do your Payment</p>
+        </div>
+        <div class="payment-form">
+          <h3>Deposit Amount</h3>
+          <div class="form-group">
+            <label for="receiver-id">Receiver ID</label>
+            <input
+              type="text"
+              id="receiver-id"
+              placeholder="Enter Receiver ID"
+            />
+          </div>
+          <div class="form-group">
+            <label for="payment-account">Payment Account</label>
+            <input
+              type="number"
+              id="payment-account"
+              placeholder="Enter Payment Account"
+              min="1"
+            />
+          </div>
+          <div class="form-actions">
+            <button class="cancel">Cancel</button>
+            <button class="pay">Deposit</button>
+          </div>
+        </div>
+      </main>
     </div>
-    </aside>
-    <main class="content">
-      <div class="content-header">
-        <h1>Deposit</h1>
-       
-      </div>
-      <div class="profile-section">
-        <p class="pera" >....Do your Payment</p>
-    </div>
-      <div class="payment-form">
-        <h3>Deposit Amount</h3>
-        <div class="form-group">
-          <label for="receiver-id">Receiver ID</label>
-          <input type="text" id="receiver-id" placeholder="Enter Receiver ID" >
-        </div>
-        <div class="form-group">
-          <label for="payment-account">Payment Account</label>
-          <input type="number" id="payment-account" placeholder="Enter Payment Account" min="1">
-        </div>
-        <div class="form-actions">
-          <button class="cancel">Cancel</button>
-          <button class="pay">Deposit</button>
-        </div>
-      </div>
-    </main>
-  </div>
-  <script src="deposit.js"></script>
-</body>
+    <script type="module" src="deposit.js"></script>
+  </body>
 </html>

@@ -1,60 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Payment Page</title>
-  <link rel="stylesheet" href="Payment.css">
-</head>
-<body>
-  <div class="container">
-    <aside class="sidebar">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment Page</title>
+    <link rel="stylesheet" href="Payment.css" />
+  </head>
+  <body>
+    <div class="container">
+      <aside class="sidebar">
         <div class="logo">
-        <img src="logomark.png" alt="BankPro Logo">
-        <h1>BankPro</h1>
+          <img src="logomark.png" alt="BankPro Logo" />
+          <h1>BankPro</h1>
         </div>
-      <div>
-        <ul class="menu">
-          <li><a href="Accountdetail.html" >Accounts</a></li>
-          <li class="active"><a href="#" style="color: #1e91c0;">Payments</a></li>
-          <li><a href="TransactionHistory.html">Transaction History</a></li>
-          
-      </ul>
+        <div>
+          <ul class="menu">
+            <li><a href="Accountdetail.html">Accounts</a></li>
+            <li class="active">
+              <a href="#" style="color: #1e91c0">Payments</a>
+            </li>
+            <li><a href="TransactionHistory.html">Transaction History</a></li>
+          </ul>
+        </div>
+      </aside>
+      <main class="content">
+        <div class="content-header">
+          <h1>Payment</h1>
+        </div>
+        <div class="profile-section">
+          <p class="pera">....Do your Payment</p>
+        </div>
+        <div class="payment-form">
+          <h3>Transfer Amount</h3>
+          <div class="form-group">
+            <label for="sender-id">Sender ID</label>
+            <input
+              type="text"
+              id="sender-id"
+              placeholder="Enter Sender ID"
+              readonly
+            />
+          </div>
+          <div class="form-group">
+            <label for="receiver-id">Receiver ID</label>
+            <input
+              type="text"
+              id="receiver-id"
+              placeholder="Enter Receiver ID"
+            />
+          </div>
+          <div class="form-group">
+            <label for="payment-account">Payment Account</label>
+            <input
+              type="text"
+              id="payment-account"
+              placeholder="Enter Payment Account"
+            />
+          </div>
+          <div class="form-group">
+            <label for="pin-code">PIN Code</label>
+            <input type="password" id="pin-code" placeholder="Enter PIN Code" />
+          </div>
+          <div class="form-actions">
+            <button class="cancel">Cancel</button>
+            <button class="pay">Pay</button>
+          </div>
+        </div>
+      </main>
     </div>
-    </aside>
-    <main class="content">
-      <div class="content-header">
-        <h1>Payment</h1>
-       
-      </div>
-      <div class="profile-section">
-        <p class="pera" >....Do your Payment</p>
-    </div>
-      <div class="payment-form">
-        <h3>Transfer Amount</h3>
-        <div class="form-group">
-          <label for="sender-id">Sender ID</label>
-          <input type="text" id="sender-id" placeholder="Enter Sender ID" readonly>
-        </div>
-        <div class="form-group">
-          <label for="receiver-id">Receiver ID</label>
-          <input type="text" id="receiver-id" placeholder="Enter Receiver ID" >
-        </div>
-        <div class="form-group">
-          <label for="payment-account">Payment Account</label>
-          <input type="text" id="payment-account" placeholder="Enter Payment Account" >
-        </div>
-        <div class="form-group">
-          <label for="pin-code">PIN Code</label>
-          <input type="password" id="pin-code" placeholder="Enter PIN Code">
-        </div>
-        <div class="form-actions">
-          <button class="cancel">Cancel</button>
-          <button class="pay">Pay</button>
-        </div>
-      </div>
-    </main>
-  </div>
-  <script src="payment.js"></script>
-</body>
+    <script type="module" src="payment.js"></script>
+  </body>
 </html>

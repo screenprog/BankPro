@@ -1,15 +1,21 @@
+import config from '../config.js';
+
 const imageOutput = document.querySelector('.profile .avatars .image');
 imageOutput.src = `data:image/png;base64,${localStorage.getItem("image")}`;
 document.querySelector('.profile p').textContent = localStorage.getItem("name");
+const spinner = document.getElementById("loading-spinner");
+const transactions = document.getElementById("transactions");
 document.addEventListener("DOMContentLoaded", function() {
     const account = localStorage.getItem("accountId");
-    const apiUrl = `http://localhost:8080/user/transaction-history?id=${account}`; 
+    const apiUrl = `${config.BACKEND_API_URL}/user/transaction-history?id=${account}`; 
     const transactionsTableBody = document.querySelector('.transactions tbody');
 
     // Function to fetch transaction data from the API
     async function fetchTransactions() {
         const token = localStorage.getItem('token'); 
 
+        spinner.style.display = "block";
+        transactions.style.display = "none";
         try {
             const response = await fetch(apiUrl, {
                 method: 'GET',
@@ -27,6 +33,9 @@ document.addEventListener("DOMContentLoaded", function() {
             populateTable(transactions);
         } catch (error) {
             console.error('There has been a problem with your fetch operation:', error);
+        } finally {
+            spinner.style.display = "none";
+            transactions.style.display = "flex";
         }
     }
 

@@ -1,3 +1,5 @@
+import config from '../config.js';
+
 document.addEventListener("DOMContentLoaded", function() {
   const form = document.querySelector("form");
   const customerIdInput = document.getElementById("customer-id");
@@ -42,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function() {
       
       const token = localStorage.getItem("token");
       // Send the data to the backend
-      fetch("http://localhost:8080/user/open-account", { 
+      fetch(`${config.BACKEND_API_URL}/user/open-account`, { 
           method: "POST",
           headers: {
               "Content-Type": "application/json",
@@ -56,8 +58,7 @@ document.addEventListener("DOMContentLoaded", function() {
           }
           return response.json(); 
       })
-      .then(data => {
-          console.log("Success:", data);
+      .then(() => {
           alert("Account added successfully!");
           form.reset(); 
           window.location.href = "Accountdetail.html"

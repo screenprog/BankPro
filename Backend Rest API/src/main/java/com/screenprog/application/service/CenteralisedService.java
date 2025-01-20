@@ -482,7 +482,7 @@ public class CenteralisedService {
         if(customerRepository.existsByEmail(email) || staffRepository.existsByEmail(email)){
             return emailService.sendOTP(email);
         }
-        return "Not found";
+        return null;
     }
 
     /*TODO: Test this method*/

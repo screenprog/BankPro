@@ -1,3 +1,5 @@
+import config from './config.js';
+
 document.addEventListener("DOMContentLoaded", function() {
     const form = document.querySelector("form");
     
@@ -21,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         // Send the OTP to the backend
-        fetch("http://localhost:8080/user/forgot-pass-change", {
+        fetch(`${config.BACKEND_API_URL}/user/forgot-pass-change`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -39,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
         })
         .then(() => {
             alert("Password changed successfully");
-            window.location.href = "login.html"
+            window.location.href = "index.html"
             // You can redirect or perform other actions here
         })
         .catch(error => {

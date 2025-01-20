@@ -18,7 +18,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/staff")
-@CrossOrigin(origins = "http://127.0.0.1:5500")
 public class StaffController {
     final private CenteralisedService service;
     final private ApplicationsService applicationsService;

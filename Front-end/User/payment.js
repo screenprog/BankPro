@@ -1,3 +1,5 @@
+import config from '../config.js';
+
 document.getElementById('sender-id').value = localStorage.getItem("accountId");
 document.querySelector('.pay').addEventListener('click', () => {  
   const accountIdOfSender = document.getElementById('sender-id').value;
@@ -13,7 +15,7 @@ document.querySelector('.pay').addEventListener('click', () => {
   };
 
   const token = localStorage.getItem("token");
-  fetch('http://localhost:8080/user/transfer', {
+  fetch(`${config.BACKEND_API_URL}/user/transfer`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -32,7 +34,6 @@ document.querySelector('.pay').addEventListener('click', () => {
     })
     .then((data) => {
       alert(data);
-      console.log(data);
       clearForm();
     })
     .catch((error) => {

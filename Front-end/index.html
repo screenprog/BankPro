@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BankPro Login</title>
+    <link rel="stylesheet" href="login.css" />
+  </head>
+  <body>
+    <div id="loading-spinner" class="spinner"></div>
+    <div class="container" id="container">
+      <div class="left">
+        <h1>login</h1>
+        <form class="login-form">
+          <label for="email">User</label>
+          <input type="text" id="email" placeholder="login id or email" required />
+
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="••••••••"
+            required
+          />
+
+          <a
+            href="forgotPassEmail.html"
+            class="forgot-password"
+            id="forgot-password"
+            >Forgot Password</a
+          >
+
+          <button type="submit" class="login-button">Login</button>
+
+          <p class="register-link">
+            Don’t have an Account? <a href="CreatAccount.html">Register</a>
+          </p>
+        </form>
+      </div>
+      <div class="right">
+        <div class="logo">
+          <img src="logomark.png" alt="Piggy Bank Logo" />
+          <h2>BankPro</h2>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="login.js"></script>
+  </body>
+</html>

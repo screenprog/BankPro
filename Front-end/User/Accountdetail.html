@@ -1,85 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Account Details</title>
-    <link rel="stylesheet" href="Accountdetail.css">
-</head>
-<body>
+    <link rel="stylesheet" href="Accountdetail.css" />
+  </head>
+  <body>
     <div class="container">
-        <div class="sidebar">
-            <div class="logo">
-                <img src="logomark.png" alt="BankPro Logo">
-                
-                <span>BankPro</span>
-            </div>
-            <ul class="menu">
-                <li class="active"><a href="Accountdetail.html" style="color: #1e91c0;">Accounts</a></li>
-                <li><a href="payment.html">Payments</a></li>
-                <li><a href="TransactionHistory.html">Transaction History</a></li>
-                
-            </ul>
+      <div class="sidebar">
+        <div class="logo">
+          <img src="logomark.png" alt="BankPro Logo" />
+
+          <span>BankPro</span>
         </div>
-        <div class="content">
-            
-            <div class="content-header">
-                <h1 >Account Details</h1>
-                <div class="profile">
-                    <div class="avatars">
-                        <img class="image" src="c:\Users\ptomk\Downloads\profile.png" alt="profile image">
-                    </div>
-                    <p>Your Name</p>
-                </div>
-                <!-- <span class="status">Edit</span> -->
+        <ul class="menu">
+          <li class="active">
+            <a href="Accountdetail.html" style="color: #1e91c0">Accounts</a>
+          </li>
+          <li><a href="payment.html">Payments</a></li>
+          <li><a href="TransactionHistory.html">Transaction History</a></li>
+        </ul>
+      </div>
+      
+      <div id="loading-spinner" class="spinner"></div>
+      <div class="content" id="content">
+        <div class="content-header">
+          <h1>Account Details</h1>
+          <div class="profile">
+            <div class="avatars">
+              <img
+                class="image"
+                src="c:\Users\ptomk\Downloads\profile.png"
+                alt="profile image"
+              />
             </div>
-            <div class="profile-section">
-                
-                <p class="pera" >......Check Your Details</p>
-            </div>
-            <div class="tabs">
-                <div class="tab active">General Information</div>
-                <!-- <div class="tab">Transactions</div> -->
-            </div>
-            <div class="account-info">
-                <table>
-                    <!-- <tr>
-                        <th>Customer ID:</th>
-                        <td>My Private Account</td>
-                    </tr>
-                    <tr>
-                        <th>Account Type:</th>
-                        <td>Saving Account</td>
-                    </tr>
-                    <tr>
-                        <th>Status:</th>
-                        <td>Active</td>
-                    </tr>
-                    <tr>
-                        <th>Owner:</th>
-                        <td>Asim</td>
-                    </tr>
-                    <tr>
-                        <th>Date Opened:</th>
-                        <td>12 Dec 2020</td>
-                    </tr>
-                    <tr>
-                        <th>Email:</th>
-                        <td>asim0002@gmail.com</td>
-                    </tr>
-                    <tr>
-                        <th>Phone Number:</th>
-                        <td>+91 4354765429</td>
-                    </tr>
-                    <tr>
-                        <th>Password:</th>
-                        <td>........</td>
-                    </tr> -->
-                </table>
-               
-            </div>
+            <p>Your Name</p>
+          </div>
+          <!-- <span class="status">Edit</span> -->
         </div>
+        <div class="profile-section">
+          <p class="pera">......Check Your Details</p>
+        </div>
+        <div class="tabs">
+          <div class="tab active">General Information</div>
+          <!-- <div class="tab">Transactions</div> -->
+        </div>
+        <div class="account-info">
+          <table>
+            <!-- table content -->
+          </table>
+        </div>
+      </div>
     </div>
-    <script src="Accountdetail.js"></script>
-</body>
+    <script type="module" src="Accountdetail.js"></script>
+  </body>
 </html>

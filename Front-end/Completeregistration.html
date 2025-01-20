@@ -1,34 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Registration Complete</title>
-    <link rel="stylesheet" href="completeregistration.css">
+    <link rel="stylesheet" href="completeregistration.css" />
     <script>
-        // Function to redirect to the login page
-        function redirectToLogin() {
-            window.location.href = "login.html"; // Replace with your actual login page URL
-        }
-
-        // Add event listener when the DOM is fully loaded
-        document.addEventListener("DOMContentLoaded", function() {
-            const doneButton = document.querySelector(".done-button");
-            doneButton.addEventListener("click", redirectToLogin);
-        });
+      function redirectToLogin() {
+        window.location.href = "index.html"; 
+      }
+      document.addEventListener("DOMContentLoaded", function () {
+        const doneButton = document.querySelector(".done-button");
+        doneButton.addEventListener("click", redirectToLogin);
+      });
     </script>
-</head>
-<body>
+  </head>
+  <body>
     <div class="success-container">
-        <div class="success-card">
-            <h1>Registration Successful!</h1>
-            <p>Your registration is successfully completed, and we have sent a confirmation mail to your registered email ID.</p>
-            <button class="done-button">Done</button>
-        </div>
-        <div class="logo-container">
-            <img src="logomark.png" alt="Bank Icon" class="logo-icon">
-            <h2>BankPro</h2>
-        </div>
+      <div class="success-card">
+        <h1>Registration Successful!</h1>
+        <p>
+          Your registration is successfully completed, and we have sent a
+          confirmation mail to your registered email ID.
+        </p>
+        <button class="done-button">Done</button>
+      </div>
+      <div class="logo-container">
+        <img src="logomark.png" alt="Bank Icon" class="logo-icon" />
+        <h2>BankPro</h2>
+      </div>
     </div>
-</body>
+  </body>
 </html>

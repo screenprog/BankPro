@@ -220,9 +220,9 @@ public class UserService {
 
     }
 
-    public String email(String email) {
+    public String email(String email) throws IllegalArgumentException{
         if(customerRepository.existsByEmail(email))
-            return "Use a different email ID!\n" + email + " already exist.";
+            throw new IllegalArgumentException("Use a different email ID!\n" + email + " already exist.");
         return emailService.sendOTP(email);
     }
 }

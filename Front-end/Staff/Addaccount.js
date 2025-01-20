@@ -1,3 +1,5 @@
+import config from '../config.js';
+
 document.addEventListener("DOMContentLoaded", function() {
   const form = document.querySelector("form");
   const customerIdInput = document.getElementById("customer-id");
@@ -44,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function() {
       
       const token = localStorage.getItem("token");
       // Send the data to the backend
-      fetch('http://localhost:8080/staff/add-one-account', { // Replace with your actual endpoint
+      fetch(`${config.BACKEND_API_URL}/staff/add-one-account`, { // Replace with your actual endpoint
           method: "POST",
           headers: {
               "Content-Type": "application/json",
@@ -58,8 +60,7 @@ document.addEventListener("DOMContentLoaded", function() {
           }
           return response.json(); // Parse the JSON response
       })
-      .then(data => {
-          console.log("Success:", data);
+      .then(() => {
           alert("Account added successfully!");
           form.reset(); // Reset the form after successful submission
       })

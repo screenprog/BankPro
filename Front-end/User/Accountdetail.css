@@ -14,7 +14,25 @@ body {
     align-items: center;
     justify-content: center;
 }
-
+.spinner {
+    margin-left: 35%;
+    margin-top: 23%;
+    border: 5px dotted #ddd ; 
+    border-top: 5px dotted #000000; 
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1.5s linear infinite;
+    display: none; /* Hidden by default */
+}
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+  }
 /* Container and Sidebar */
 .container {
     display: flex;

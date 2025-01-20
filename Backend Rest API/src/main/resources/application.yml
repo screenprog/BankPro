@@ -2,9 +2,9 @@ spring:
   application:
       name: Bank-Account-Management-System
   datasource:
-    url: jdbc:postgresql://localhost:5432/bank_data_base
-    username: postgres
-    password: NoP4$$
+    url: ${DATASOURCE_URL}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
     hikari:
       auto-commit: false
   jpa:
@@ -20,8 +20,8 @@ spring:
       name: asim
       password: asim
   mail:
-    host: smtp.gmail.com
-    port: 587
+    host: ${MAIL_HOST}
+    port: ${MAIL_PORT}
     username: ${MY_EMAIL}
     password: ${MY_EMAIL_APP_PASS}
     properties:
@@ -32,5 +32,6 @@ spring:
             enable: true
 
 
-
+frontend:
+  url: ${FRONTEND_URL}
 

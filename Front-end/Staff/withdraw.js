@@ -1,3 +1,5 @@
+import config from '../config.js';
+
 document.querySelector('.pay').addEventListener('click', () => {  
   const accountIdOfReceiver = document.getElementById('sender-id').value;
   // const accountIdOfReceiver = document.getElementById('receiver-id').value;
@@ -12,7 +14,7 @@ document.querySelector('.pay').addEventListener('click', () => {
   };
 
   const token = localStorage.getItem("token");
-  fetch('http://localhost:8080/staff/withdraw', {
+  fetch(`${config.BACKEND_API_URL}/staff/withdraw`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -31,7 +33,6 @@ document.querySelector('.pay').addEventListener('click', () => {
     })
     .then((data) => {
       alert(data);
-      console.log(data);
       document.getElementById('sender-id').value = "";
       document.getElementById('payment-account').value = "";
     })

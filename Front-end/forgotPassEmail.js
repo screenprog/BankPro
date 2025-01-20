@@ -1,3 +1,5 @@
+import config from './config.js';
+
 document.addEventListener("DOMContentLoaded", function() {
     const form = document.querySelector("form");
     
@@ -17,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         // Send the email to the backend
-        fetch("http://localhost:8080/user/forgot-pass-email", {
+        fetch(`${config.BACKEND_API_URL}/user/forgot-pass-email`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -36,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function() {
         })
         .catch(error => {
             console.error("There was a problem with the fetch operation:", error);
-            alert("Failed to send OTP. Please try again.");
+            alert("Email not found");
         });
     });
 

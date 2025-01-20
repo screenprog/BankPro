@@ -22,7 +22,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin(origins = "http://127.0.0.1:5500")
 public class UserController {
 
     @Autowired
@@ -35,24 +34,21 @@ public class UserController {
     private OtpService otpService;
     private final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
-    /*TODO: Test this endpoint :o DONE*/
     @PostMapping("forgot-pass-email")
-    private String forgotPassEmail(@RequestBody EmailRequest emailRequest){
+    private ResponseEntity<String> forgotPassEmail(@RequestBody EmailRequest emailRequest){
         LOGGER.info("Inside forgotPassEmail");
-        return service.verifyEmailForPassWord(emailRequest.email());
-        //TODO:
-        // after this user will be redirected to verify-email endpoint
-        /*String message = service.verifyEmailForPassWord(emailRequest.email());
-        HashMap<String, String> response = new HashMap<>();
-        response.put("message",message);
-        return ResponseEntity.ok(response);*/
+        String response = service.verifyEmailForPassWord(emailRequest.email());
+
+        return (response == null)? ResponseEntity.notFound().build(): ResponseEntity.ok(response);
+
+        // after this user will be redirected to forgot-pass-change via endpoint
+
     }
 
-    /*TODO: Test this endpoint :o DONE*/
+
     @PostMapping("forgot-pass-change")
     private String forgotPassChange(@RequestBody ForgotPass forgotPass){
-        //TODO:
-        // If email verified than user will be redirected here
+
         if(otpService.verifyOtp(forgotPass.email(), forgotPass.otp())){
             otpService.clearOtp(forgotPass.email());
             return service.changePassword(forgotPass.email(), forgotPass.newPass());
@@ -61,11 +57,15 @@ public class UserController {
     }
 
     @PostMapping("email")
-    private ResponseEntity<Map<String, String>> email(@RequestBody EmailRequest emailRequest){
-        Map<String, String> response = new HashMap<>();
-        String message = userService.email(emailRequest.email());
-        response.put("message", message);
-        return ResponseEntity.ok(response);
+    private ResponseEntity< String> email(@RequestBody EmailRequest emailRequest){
+
+        try {
+            String response = userService.email(emailRequest.email());
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            LOGGER.warn(e.toString());
+            return ResponseEntity.badRequest().body(e.toString());
+        }
     }
 
     @PostMapping("verify-email")
