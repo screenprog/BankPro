@@ -114,7 +114,6 @@ The Bank Account Management System is a web-based application designed to stream
 
 ## Future Updates
 - User login functionality using email ID instead of customer ID.
-- Implementation of forgot password feature.
 - Development of the admin interface for the frontend.
 
 ---
