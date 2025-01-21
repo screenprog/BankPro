@@ -2,7 +2,8 @@
 
 ## Project Overview
 The Bank Account Management System is a web-based application designed to streamline banking operations for admins, staff, and users. This system includes a secure backend built with Java Spring Boot and a frontend developed for user interaction. The project is currently under development, with several features already functional and others planned for future updates.
-
+- Frontend is live on [Netlify](https://resonant-caramel-052c2b.netlify.app)
+- Backend is live on [Render](https://bankpro.onrender.com)
 ---
 
 ## Features
