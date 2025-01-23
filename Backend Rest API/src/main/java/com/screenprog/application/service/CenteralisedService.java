@@ -3,6 +3,7 @@ package com.screenprog.application.service;
 import com.screenprog.application.dtos.*;
 import com.screenprog.application.email_service.EmailService;
 import com.screenprog.application.for_optimization.AccountDetails;
+import com.screenprog.application.for_optimization.CustomerDetails;
 import com.screenprog.application.model.*;
 import com.screenprog.application.repo.*;
 import com.screenprog.application.security.BCryptEncryption;
@@ -16,6 +17,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -123,8 +125,15 @@ public class CenteralisedService {
      * This method is used to get all the customers
      * @return {@link List<Customer>} objects
      * */
-    public List<Customer> getAllCustomer() {
-        return customerRepository.findAll();
+    public List<CustomerDetails> getAllCustomer() {
+        List<Tuple> customerDetailsForFrontend = customerRepository.findCustomerDetailsForFrontend();
+        customerDetailsForFrontend.forEach(System.out::println);
+        List<CustomerDetails> list = customerDetailsForFrontend
+                .stream()
+                .map(t -> new CustomerDetails(t.get(0, Long.class), t.get(1, String.class), t.get(2, String.class),
+                        t.get(3, LocalDate.class), t.get(4, String.class)))
+                .toList();
+        return list;
     }
 
 
@@ -167,7 +176,7 @@ public class CenteralisedService {
     /**
      * @return {@link List<Account>} List of all the accounts*/
     public List<AccountDetails> getAllAccounts() {
-        List<Tuple> detailsForFrontend = accountRepository.findDetailsForFrontend();
+        List<Tuple> detailsForFrontend = accountRepository.findAccountDetailsForFrontend();
         detailsForFrontend.forEach(System.out::println);
         List<AccountDetails> list = detailsForFrontend
                 .stream().map(t -> new AccountDetails(t.get(0, Long.class), t.get(1, Double.class),

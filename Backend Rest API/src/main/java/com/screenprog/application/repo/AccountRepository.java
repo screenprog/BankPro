@@ -13,5 +13,5 @@ import java.util.List;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long> {
     @Query("SELECT accountNumber, balance, status, openDate FROM Account")
-    List<Tuple> findDetailsForFrontend();
+    List<Tuple> findAccountDetailsForFrontend();
 }

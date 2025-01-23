@@ -4,6 +4,7 @@ import com.screenprog.application.dtos.AccountDTO;
 import com.screenprog.application.for_optimization.AccountDetails;
 import com.screenprog.application.dtos.CustomerDTO;
 import com.screenprog.application.dtos.TransferDTO;
+import com.screenprog.application.for_optimization.CustomerDetails;
 import com.screenprog.application.model.*;
 import com.screenprog.application.service.ApplicationsService;
 import com.screenprog.application.service.CenteralisedService;
@@ -83,7 +84,7 @@ public class StaffController {
     }
 
     @GetMapping("/get-all-customers")
-    public ResponseEntity<List<Customer>> getAllCustomers(){
+    public ResponseEntity<List<CustomerDetails>> getAllCustomers(){
         return ResponseEntity.ok(service.getAllCustomer());
     }
 
