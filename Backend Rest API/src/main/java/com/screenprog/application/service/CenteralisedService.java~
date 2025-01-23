@@ -483,11 +483,12 @@ public class CenteralisedService {
     /**
      * This method is used to get all the transactions
      * @return {@link List<Transaction>} of all the transactions*/
-    public List<TransactionDetails> getAllTransactions() {
-        return transactionRepository.findTransactionsForFrontEnd()
+    public List<Transaction> getAllTransactions() {
+        transactionRepository.findTransactionsForFrontEnd()
                 .stream()
-                .map(t -> new TransactionDetails(t.get(0, Long.class), t.get(1, Double.class), t.get(2, Double.class), t.get(3, LocalDateTime.class), t.get(4, String.class)))
+                .map(t -> new TransactionDetails(t.get(0, )))
                 .toList();
+        return null;
     }
 
     /*TODO: Test this method*/
