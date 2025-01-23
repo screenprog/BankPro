@@ -1,0 +1,9 @@
+package com.screenprog.application.dtos;
+
+import com.screenprog.application.model.Status;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+public record AccountDetails(Long accountNumber, Double balance, Status status, LocalDateTime openDate ) {
+}

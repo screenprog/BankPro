@@ -1,5 +1,4 @@
 const config = {
-    BACKEND_API_URL: 'https://bankpro.onrender.com'
+    BACKEND_API_URL: 'http://localhost:8080'
 };
-
 export default config;

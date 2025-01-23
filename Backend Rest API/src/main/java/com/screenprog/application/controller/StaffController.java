@@ -1,6 +1,7 @@
 package com.screenprog.application.controller;
 
 import com.screenprog.application.dtos.AccountDTO;
+import com.screenprog.application.for_optimization.AccountDetails;
 import com.screenprog.application.dtos.CustomerDTO;
 import com.screenprog.application.dtos.TransferDTO;
 import com.screenprog.application.model.*;
@@ -51,7 +52,7 @@ public class StaffController {
     }
 
     @GetMapping("/get-all-accounts")
-    public ResponseEntity<List<Account>> getAllAccounts(){
+    public ResponseEntity<List<AccountDetails>> getAllAccounts(){
         return ResponseEntity.ok(service.getAllAccounts());
     }
 
