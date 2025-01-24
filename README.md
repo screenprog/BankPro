@@ -45,58 +45,64 @@ The Bank Account Management System is a web-based application designed to stream
 
 ## How to Run the Project
 
+#### Prerequisites
+- Download the `.rar` file from [releas v1.0.3](https://github.com/screenprog/BankPro/releases) section, which contains:
+  - Backend Rest API
+  - Data-Volume
+  - Front-end folder
+  
 ### Database Setup
 
 #### Prerequisites
-- Podman
-- Download the zip file from the release section, which contains:
-  - `BankPro-v1.0.0.jar`
-  - `ourbankdata.tar.gz`
-  - Frontend folder
-
+- [PostgreSQL](https://www.postgresql.org/docs/)
 #### Steps
-1. **Download Podman** and navigate to the folder containing the `ourbankdata.tar.gz` file.
-2. **Start Podman Machine**:
+1. **Create a Database**:
+
+   Login into your postgres account and run the following command:
+
+    ```CREATE DATABASE <database_name>;```
+
+2. **Import Data**:
+   Navigate to Data-Volume folder which contains the `backup.dump` file and run the following command to import the data:
    ```
-   podman machine start
-   ```
-3. **Create a Volume**:
-   ```
-   podman volume create bankdatavolume
-   ```
-4. **Mount Data to Volume**:
-   ```
-   podman run --rm -v bankdatavolume:/data -v /d/path/to/volume:/host_mnt/n busybox tar xzf /host_mnt/d/ourbankdata.tar.gz -C /data
-   ```
-5. **Create Postgres Container**:
-   ```
-   podman run -d --name ourbankpro -e POSTGRES_PASSWORD=password -v bankdatavolume:/var/lib/postgresql/data -p 5437:5432 postgres:16-alpine
+   pg_restore -U <username> -d <database_name> -h <hostname> -p <port> -W ./db_backup.dump
    ```
 
-   **Note**: Ensure to use port `5437` as the jar file is configured to connect to this port.
+3. **Verify the Database**:
+   ```
+   psql -U <username> -d <database_name>;
+   ```
 
-### Backend Setup
+### Backend REST API Setup
 
 #### Prerequisites
-- JDK version 21 or any latest one
+- [JDK version 21](https://www.oracle.com/in/java/technologies/downloads/#java21) or any latest one
+
+
+### Enviroment variables:
+- DATASOURCE_URL = `jdbc:<database_url>`
+- DATASOURCE_USERNAME = `database_username`
+- DATASOURCE_PASSWORD = `databse_password`
+- MY_EMAIL = `your email id`
+- MY_EMAIL_APP_PASS = `email app password or email password`
+- MAIL_HOST = `smtp.gmail.com` is a gmail host
+- MAIL_PORT = `587` is a gmail port
+- FRONTEND_URL = `http://127.0.0.1:5500`
 
 #### Steps
-1. Navigate to the folder containing the jar file.
+1. Navigate to Backend Rest API folder which contains the jar file.
 2. Run the jar file:
    ```
-   java -jar BankPro-v1.0.0.jar
+   java -jar BankPro-v1.0.3.jar
    ```
-
 ### Frontend Setup
 
 #### Prerequisites
-- VS Code with Live Server extension
+- [VS Code](https://code.visualstudio.com/) with [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) extension
 
 #### Steps
-1. Open the `login.html` file in VS Code.
+1. Open the `index.html` file in VS Code.
 2. Run the file using the Live Server extension.
-
-   **Note**: Backend accepts requests from `http://127.0.0.1:5500/` only.
 
 ---
 
@@ -114,15 +120,14 @@ The Bank Account Management System is a web-based application designed to stream
 ---
 
 ## Future Updates
-- User login functionality using email ID instead of customer ID.
+- User login functionality using email ID and customer ID both.
 - Development of the admin interface for the frontend.
 
 ---
 
 ## Contributions
-Contributions to the project are welcome! Future updates and new features will be pushed to the repository. For any issues or suggestions, feel free to raise an issue in the repository or contact the project team.
+Contributions to the project are welcome! Future updates and new features will be pushed to the repository. For any issues or suggestions, feel free to raise an issue in the repository or contact me.
 
 ---
 
 For more details, refer to the project files and codebase.
-
